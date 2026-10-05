@@ -3,8 +3,9 @@ import binascii
 import re
 from dataclasses import dataclass, field
 from http.cookies import CookieError, SimpleCookie
+from html.parser import HTMLParser
 from typing import Any
-from urllib.parse import parse_qsl, urlsplit
+from urllib.parse import parse_qsl, unquote, urlsplit
 
 from .sanitize import (CREDENTIAL_TOKEN, OBJECT_KEYS, PRIVATE_KEY, SECRET_KEYS,
                        load_json_limited, pseudonym, sanitize_body, sanitize_headers,
@@ -16,6 +17,112 @@ MAX_ENTRIES = 2_000
 MAX_HAR_BYTES = 10 * 1024 * 1024
 MAX_BODY_CHARS = 1024 * 1024
 MAX_HEADERS = 300
+MAX_EXPOSURE_SCAN_CHARS = 65_536
+
+
+class _DirectoryIndexShape(HTMLParser):
+    """Count structure only; never retain filenames, hrefs or displayed rows."""
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.heading_tag = None
+        self.heading = ""
+        self.index_heading = False
+        self.links = 0
+        self.container = False
+        self.form_or_code = False
+        self.ignored = 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag in {"script", "style"}:
+            self.ignored += 1
+        if self.ignored:
+            return
+        if tag in {"title", "h1"}:
+            self.heading_tag, self.heading = tag, ""
+        self.container |= tag in {"table", "pre", "ul"}
+        self.form_or_code |= tag in {"form", "code"}
+        if tag == "a":
+            href = dict(attrs).get("href") or ""
+            if href and not href.startswith(("#", "?", "//")) and not re.match(r"[A-Za-z][A-Za-z0-9+.-]*:", href):
+                self.links = min(self.links + 1, 1000)
+
+    def handle_endtag(self, tag):
+        if tag in {"script", "style"} and self.ignored:
+            self.ignored -= 1
+        if tag == self.heading_tag:
+            self.index_heading |= bool(re.match(r"(?i)^(?:index of /|directory listing for /|directory: /)", self.heading.strip()))
+            self.heading_tag, self.heading = None, ""
+
+    def handle_data(self, data):
+        if self.heading_tag and not self.ignored:
+            self.heading = (self.heading + data)[:256]
+
+
+def _common_exposure_signals(url: str, method: str, status: int | None, text: str | None,
+                             mime: str | None, headers: list[dict]) -> tuple[list[str], str | None]:
+    """Adapt pinned Nuclei fingerprints to already-captured HAR only.
+
+    No URL discovery, file access, requests or value extractors. See
+    docs/COMMON_CHECKS.md for pinned sources, narrower gates and false positives.
+    """
+    path = unquote(urlsplit(url).path).lower()
+    git_path = path.endswith("/.git/config")
+    env_path = bool(re.fullmatch(r"\.env(?:[._-][a-z0-9_-]+)*", path.rsplit("/", 1)[-1]))
+    omitted = "[SENSITIVE_FILE_BODY_OMITTED]" if git_path or env_path else None
+    if not text:
+        return [], omitted
+    sample = text[:MAX_EXPOSURE_SCAN_CHARS]
+    content_types = " ".join([mime or "", *(header["value"] for header in headers if header["name"].lower() == "content-type")]).lower()
+    html = "html" in content_types or bool(re.search(r"(?i)<(?:!doctype|html|body|form|pre|code|script|title|h1)\b", sample))
+    directory = False
+    if html:
+        shape = _DirectoryIndexShape()
+        shape.feed(sample)
+        directory = shape.index_heading and shape.container and shape.links >= 2 and not shape.form_or_code
+        if directory:
+            omitted = omitted or "[DIRECTORY_INDEX_BODY_OMITTED]"
+    if method != "GET" or status != 200:
+        return [], omitted
+    signals = ["directory_index_observed"] if directory else []
+    if not (git_path or env_path) or html or len(text) > MAX_EXPOSURE_SCAN_CHARS or "json" in content_types or "xml" in content_types or "\x00" in text:
+        return signals, omitted
+    lines = [line.strip() for line in text.splitlines() if line.strip() and not line.lstrip().startswith(("#", ";"))]
+    if not lines:
+        return signals, omitted
+    if git_path:
+        section, characteristic = "", False
+        for line in lines:
+            heading = re.fullmatch(r'\[([A-Za-z][A-Za-z0-9.-]*)(?:\s+"[^"\r\n]+")?\]', line)
+            if heading:
+                section = heading.group(1).lower()
+                continue
+            assignment = re.fullmatch(r"([A-Za-z][A-Za-z0-9-]*)\s*=\s*.*", line)
+            if not assignment or not section:
+                return signals, omitted
+            key = assignment.group(1).lower()
+            characteristic |= (section == "core" and key in {"repositoryformatversion", "filemode", "bare", "logallrefupdates"}) or (section in {"credential", "credentials"} and key in {"helper", "username", "password", "pass"})
+        if characteristic:
+            signals.append("git_config_observed")
+    elif env_path:
+        if re.search(r"(?:[._-])(?:example|sample|template)(?:[._-]|$)", path.rsplit("/", 1)[-1]):
+            return signals, omitted
+        recognized = set()
+        non_placeholder_secret = False
+        keys = {"APP_NAME", "APP_ENV", "APP_KEY", "APP_DEBUG", "APP_URL", "APP_PASSWORD", "DB_HOST", "DB_PASSWORD", "DB_DATABASE", "DB_CONNECTION", "DB_USERNAME", "MAIL_PASSWORD", "REDIS_PASSWORD"}
+        for line in lines:
+            assignment = re.fullmatch(r"(?:export\s+)?([A-Z_][A-Z0-9_]*)\s*=\s*(.*)", line)
+            if not assignment:
+                return signals, omitted
+            key, value = assignment.groups()
+            if key in keys:
+                recognized.add(key)
+            value = value.split(" #", 1)[0].strip().strip("\"'")
+            placeholder = not value or bool(re.search(r"(?i)^(?:\[redacted\]|<[^>]+>|\$\{[^}]+\}|null|none|x{4,}|changeme|change[-_]me|example|sample|dummy|placeholder|your[-_].*|replace[-_].*)$", value))
+            if key in {"APP_KEY", "APP_PASSWORD", "DB_PASSWORD", "MAIL_PASSWORD", "REDIS_PASSWORD"} and not placeholder:
+                non_placeholder_secret = True
+        if len(recognized) >= 2 and non_placeholder_secret:
+            signals.append("env_config_observed")
+    return signals, omitted
 
 
 class HarError(ValueError):
@@ -180,6 +287,8 @@ def parse_har(project_id: str, content: bytes, policy: PolicyCreate) -> list[Par
                 query[safe_key] = clean
         cookies, signals = _cookies(project_id, response, res_headers)
         signals.extend(_body_signals(res_text, res_mime))
+        exposure_signals, omitted_response = _common_exposure_signals(url, method, status, res_text, res_mime, res_headers)
+        signals.extend(exposure_signals)
         if res_mime and "html" in res_mime.lower() and "html_response" not in signals:
             signals.append("html_response")
         # Scope uses the original URL; sanitisation also starts from its encoded
@@ -208,7 +317,7 @@ def parse_har(project_id: str, content: bytes, policy: PolicyCreate) -> list[Par
                 query=query,
                 request_body=request_body,
                 response_status=status,
-                response_body=sanitize_body(project_id, res_text, res_mime),
+                response_body=omitted_response or sanitize_body(project_id, res_text, res_mime),
                 response_headers=sanitize_headers(res_headers, project_id),
                 response_cookies=cookies,
                 signals=list(dict.fromkeys(signals)),

@@ -19,4 +19,5 @@
 - `scopepilot-offline-headers.yaml` 是明确标注的派生规则：离线 Nuclei 使用 `all_headers` 而非原在线规则的 `header`；禁用重定向，移除不再适用的原签名。运行前校验派生规则固定 SHA-256，不把修改后的规则冒充上游签名版本。
 - Playwright Python `1.58.0`，仅安装 Chromium Headless Shell `145.0.7632.6`（build 1208），由官方 Microsoft 包指定的 `cdn.playwright.dev/chrome-for-testing-public` 分发；附带其必需的 FFmpeg/Winldd 辅助工具。没有另装 Firefox/WebKit。未发现独立上游浏览器校验文件，不把自行计算哈希当来源证明。
 - Codex 使用官方 [Python MCP SDK v1.26.0](https://github.com/modelcontextprotocol/python-sdk/tree/v1.26.0)，不手写 MCP 传输协议。
+- v1 后按追加要求，再查阅固定提交的官方目录索引、Git 与环境配置模板，只参考其响应判据增补 HAR 离线检查，不执行原模板请求或秘密值提取器；来源、哈希和比较见 [COMMON_CHECKS.md](COMMON_CHECKS.md)。
 - Python 包锁文件保留官方 PyPI 各平台 wheel SHA-256；`docs/python-dependencies.json` 记录本次下载对应版本、来源、许可证与体积。Nuclei/Gitleaks 官方档案同时核对 GitHub 发布资产 digest 与上游 checksums 文件，见 `tool-lock.json` 和 `docs/tool-installation.json`。

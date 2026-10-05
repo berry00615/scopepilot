@@ -10,6 +10,8 @@
 
 包含原有回归、完整目标身份、证据跨项目拒绝、去重、秘密脱敏、正常/异常 HAR、CORS 误报边界、工具格式校验、数据库迁移、评级、确认/排除/待补证据和报告。MCP 测试会真正启动 stdio 服务子进程，但不调用模型。
 
+追加的目录索引、Git/环境配置暴露检查包含 49 项正常/异常、软 404、登录页、示例值、正文省略、持久化与重复分析测试。最终本机完整运行 187 项通过，记录于 [test-results.json](test-results.json)；仅有 1 条上游 TestClient 弃用提示。合成材料和判据见 [COMMON_CHECKS.md](COMMON_CHECKS.md)。
+
 任务单元测试会运行测试临时目录中的合成 Python 助手，检查非零退出、超时、取消、标准输出与文件总量超限、异常结果与提交竞争；这部分不等于真实 Nuclei/Gitleaks 检测验收。HTTP 接收层在 multipart 解析写临时文件前限制总量，另验证分块与声明长度异常。
 
 ## 官方工具真实集成
@@ -39,7 +41,7 @@ $env:PLAYWRIGHT_BROWSERS_PATH = "$PWD\.tools\browsers"
 .venv\Scripts\python.exe scripts\verify_codex_client.py
 ```
 
-本机 Codex app-server 实際识别 12 工具并调用两项只读工具，使用进程内配置与短暂协议会话；零模型轮次、零付费模型调用，不修改既有聊天或全局配置。详见 [Codex 接入](CODEX.md) 和 [codex-verification.json](codex-verification.json)。
+本机 Codex app-server 实际识别 12 工具并调用两项只读工具，使用进程内配置与短暂协议会话；零模型轮次、零付费模型调用，不修改既有聊天或全局配置。详见 [Codex 接入](CODEX.md) 和 [codex-verification.json](codex-verification.json)。
 
 ## 交付检查
 

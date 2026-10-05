@@ -81,6 +81,17 @@ def check_payload(payload: dict) -> list[dict]:
         if signal in signals:
             result.append(_candidate(kind, claim, category="vulnerability", severity="unrated", reason="只有离线内容特征，缺少可访问性、有效性与影响证据。",
                 remediation=remediation, missing="响应的预期用途、访问身份、数据真实性与影响范围。", manual="人工检查脱敏证据及自有测试数据；不要使用疑似凭据访问第三方服务。"))
+    if "directory_index_observed" in signals:
+        result.append(_candidate("directory_index_review", "已捕获的成功响应具有目录索引标题及列表链接结构；未保存文件名，需核对是否为预期公开目录。", severity="info",
+            reason="目录列表可能是有意公开的下载目录；只有结构线索，不能确认敏感文件泄露。", remediation="不需要公开浏览时关闭目录索引；需要公开时只发布经过审核的文件。",
+            missing="目录是否设计为公开、列表内容敏感性及访问身份；未访问任何列表链接。", manual="仅检查既有授权材料与部署配置，比较自建正常页面、登录页和错误页；不要自动抓取目录内文件。"))
+    for signal, kind, label in (("git_config_observed", "git_config_exposure_review", "Git 配置"), ("env_config_observed", "env_config_exposure_review", "环境配置")):
+        if signal in signals:
+            result.append(_candidate(kind, f"已捕获的成功响应在对应配置文件路径包含{label}结构特征；正文已整体省略，尚未确认公开访问或实际秘密有效性。", category="vulnerability", severity="unrated",
+                reason="路径、成功状态与内容结构提供暴露线索，无法单凭 HAR 确认非预期访问、凭据有效性或业务影响。",
+                remediation="将配置和版本控制元数据移出公开目录，核查部署排除规则；仅在确认有效秘密泄露后撤销并轮换。",
+                missing="响应的访问身份、生产/示例属性、预期公开范围和实际影响；原始配置值未保存。",
+                manual="核对已有授权记录和自建配置对照，排除文档示例、登录页与自定义 404；不要使用发现的值登录，也不要重建或下载仓库。"))
     object_keys = _object_keys(payload.get("query")) | _object_keys(payload.get("request_body"))
     if object_keys or re.search(r"/obj_[0-9a-f]{12}(?:/|$)", str(payload.get("path", ""))):
         result.append(_candidate("object_authorization_review", "接口包含对象标识线索，需要使用自有 A/B 账号核查对象授权。", category="vulnerability", severity="unrated",
