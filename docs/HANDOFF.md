@@ -21,6 +21,7 @@
 | 原仓库基线回归 | 17 通过，单独使用原提交源码运行 |
 | 最终本地 pytest | 187 通过；1 条上游 TestClient 弃用提示，无失败；含原有回归、解析、授权、多目标、跨项目、迁移、去重、状态、任务边界、真实 MCP stdio 及新增 49 项部署暴露检查 |
 | v1 GitHub CI | [Actions 37337619810](https://github.com/berry00615/scopepilot/actions/runs/37337619810) 在 Python 3.11/3.13 均通过，提交 ae8f5d0；最初 YAML 冒号解析失败已修正，无跳过检查 |
+| 新增检查 GitHub CI | [Actions 37340431129](https://github.com/berry00615/scopepilot/actions/runs/37340431129) 在 Python 3.11/3.13 均通过，功能提交 711c2e7；后续仅整理交接记录 |
 | 官方工具真实集成 | Nuclei 3.11.1 与 Gitleaks 8.30.1，各阳性、阴性、重复阳性，共 6 轮通过；重复复用材料，不新增重复发现 |
 | 浏览器端到端 | Chromium 9 组检查通过：安装后真实启动、项目/导入/分析、四类筛选、详情、取消、合成复核、下载和离线 API 文档；桌面 1440px 与窄屏 390px 已查看截图 |
 | Codex 客户端 | 本机 CLI 0.160.0 app-server connected，识别 12 工具，成功调用 capabilities/list_projects；0 模型轮次，无全局配置修改 |
@@ -47,7 +48,7 @@ Codex 项目配置已写入本地 `.codex/config.toml`，不会提交绝对路�
 
 ## GitHub 状态
 
-基线 `4c6904bc3edf27a1ed92065cbd36cb03007d8c3e`，唯一开发分支 [codex/scopepilot-v1-20261005](https://github.com/berry00615/scopepilot/tree/codex/scopepilot-v1-20261005)。上游 main 已复核仍为该基线。功能里程碑 `90562ef`，CI 修正 `ae8f5d0`；最终提交在交付消息中列明。
+基线 `4c6904bc3edf27a1ed92065cbd36cb03007d8c3e`，唯一开发分支 [codex/scopepilot-v1-20261005](https://github.com/berry00615/scopepilot/tree/codex/scopepilot-v1-20261005)。上游 main 已复核仍为该基线。功能里程碑 `90562ef`，CI 修正 `ae8f5d0`，追加检查 `711c2e7`；最终文档提交在交付消息中列明。
 
 PR **尚未创建**：连接器返回 `403 Resource not accessible by integration`；本机没有 gh CLI，备用浏览器停在登录页，未读取或提取凭据。可从 [创建 PR 页面](https://github.com/berry00615/scopepilot/pull/new/codex/scopepilot-v1-20261005) 使用 [已准备的正文](PR_DRAFT.md) 创建草稿。未合并：系统级隔离仍缺独立证据，不能由模拟成功或较多单元测试替代。
 
