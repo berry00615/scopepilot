@@ -7,3 +7,11 @@ runtime/*.db-*
 runtime/reports/
 runtime/tmp/
 .env
+.downloads/
+.cache/
+.tools/
+runtime/
+test-results/
+dist/
+*.egg-info/
+.codex/config.toml

@@ -1,0 +1,8 @@
+{
+  "verified_at": "2026-10-05T15:54:58.393230+00:00",
+  "scope": "non-ignored project text only",
+  "tool": "Gitleaks 8.30.1, official binary hash verified, --redact=100",
+  "files_scanned": 68,
+  "matches": [],
+  "note": "A match requires manual classification; zero matches is not a proof that all secrets are absent."
+}

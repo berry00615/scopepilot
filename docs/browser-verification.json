@@ -1,0 +1,18 @@
+{
+  "verified_at": "2026-10-05T15:47:58.355154+00:00",
+  "status": "passed",
+  "browser": "Chromium headless shell 145.0.7632.6 / Playwright 1.58.0",
+  "data": "synthetic only; confirmation tests form semantics, not vulnerability exploitation",
+  "checks": [
+    "installed CLI starts on loopback with disposable DB",
+    "offline API reference renders without CDN or external requests",
+    "UI project creation, HAR upload, offline analysis and real counts",
+    "severity/status/source/category filters, including empty result",
+    "report refused before evidence-backed review",
+    "task progress/log rendering and cancellation; simulation creates no findings",
+    "synthetic human-review form, evidence references, report preview/download and redaction",
+    "1440px desktop and 390px narrow layout; narrow details/export; no horizontal overflow",
+    "no browser JavaScript errors or external resource requests"
+  ],
+  "server_stopped": true
+}

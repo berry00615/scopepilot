@@ -1,0 +1,110 @@
+# Derived from official nuclei-templates commit 6fe741cf4df683674c78b85d99b31109f5ed34c4.
+# Changes: offline HTTP exposes all_headers, not header; redirects disabled.
+# Modified locally: upstream signature intentionally not retained. MIT license alongside.
+id: http-missing-security-headers
+
+info:
+  name: HTTP Missing Security Headers
+  author: socketz,geeknik,G4L1T0,convisoappsec,kurohost,dawid-czarnecki,forgedhallpass,jub0bs,userdehghani,celbahraoui,safejulian
+  severity: info
+  description: |
+    This template searches for missing HTTP security headers. The impact of these missing headers can vary.
+  classification:
+    cwe-id: CWE-693
+  metadata:
+    max-request: 1
+  tags: misconfig,headers,generic,vuln
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    redirects: false
+
+    matchers-condition: or
+    matchers:
+      - type: dsl
+        name: strict-transport-security
+        dsl:
+          - "!regex('(?i)strict-transport-security', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: content-security-policy
+        dsl:
+          - "!regex('(?i)content-security-policy', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: permissions-policy
+        dsl:
+          - "!regex('(?i)permissions-policy', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: x-frame-options
+        dsl:
+          - "!regex('(?i)x-frame-options', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: x-content-type-options
+        dsl:
+          - "!regex('(?i)x-content-type-options', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: x-permitted-cross-domain-policies
+        dsl:
+          - "!regex('(?i)x-permitted-cross-domain-policies', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: referrer-policy
+        dsl:
+          - "!regex('(?i)referrer-policy', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: cross-origin-embedder-policy
+        dsl:
+          - "!regex('(?i)cross-origin-embedder-policy', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: cross-origin-opener-policy
+        dsl:
+          - "!regex('(?i)cross-origin-opener-policy', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: cross-origin-resource-policy
+        dsl:
+          - "!regex('(?i)cross-origin-resource-policy', all_headers)"
+          - "status_code != 301 && status_code != 302"
+        condition: and
+
+      - type: dsl
+        name: missing-content-type
+        dsl:
+          - "!regex('(?i)content-type:', all_headers)"
+          - "status_code == 200"
+        condition: and
+
+      - type: dsl
+        name: content-type-charset-specification
+        dsl:
+          - "regex('(?i)content-type:\\s*text/html', all_headers)"
+          - "!regex('(?i)content-type:.*charset=', all_headers)"
+          - "status_code == 200"
+        condition: and

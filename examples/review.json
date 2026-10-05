@@ -1,8 +1,16 @@
 {
-  "status": "confirmed",
-  "reviewer": "local researcher",
-  "actual_result": "Describe only the behavior actually observed with self-owned test accounts and objects.",
-  "tested_identity": "test-account-b",
-  "tested_object": "self-created-object-a",
-  "stop_reason": "Stopped after the single authorized hypothesis had enough evidence."
+  "status": "needs_evidence",
+  "reviewer": "请替换为实际复核人",
+  "actual_result": "仅完成离线材料检查，尚未取得自有账号与对象的授权对照结果，不能确认漏洞。",
+  "tested_identity": "待核对的自有账号 B",
+  "tested_object": "待核对的自建对象 A",
+  "stop_reason": "缺少必要对照与证据，停止确认并等待补充。",
+  "success_criteria": "仅在自有账号 B 未获授权却能访问账号 A 的自建对象，且所有者与非所有者对照支持该观察时，才满足对象授权问题的确认判据。",
+  "criteria_met": false,
+  "evidence_refs": [],
+  "control_required": true,
+  "control_result": "",
+  "control_passed": null,
+  "severity": null,
+  "severity_reason": ""
 }

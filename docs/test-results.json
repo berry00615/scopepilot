@@ -1,0 +1,11 @@
+{
+  "tests": 138,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 8.408,
+  "recorded_utc": "2026-10-05T15:54:57.3757487Z",
+  "command": "python -m pytest -q --basetemp runtime/pytest-final --junitxml=runtime/pytest-final.xml",
+  "warning": "One upstream Starlette TestClient httpx deprecation warning",
+  "baseline_tests": 17
+}

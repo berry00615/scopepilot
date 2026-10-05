@@ -1,0 +1,59 @@
+{
+  "checked_at_utc": "2026-10-05T15:34:17.904898+00:00",
+  "status": "passed",
+  "client": "installed Codex CLI app-server",
+  "model_turns_requested": 0,
+  "configuration_scope": "process-local CLI overrides; no global configuration edits",
+  "project_config_present": true,
+  "existing_chat_modified": false,
+  "protocol_session_ephemeral": true,
+  "persisted_session_path": false,
+  "other_plugins_disabled": true,
+  "requested_methods": [
+    "initialize",
+    "thread/start",
+    "mcpServerStatus/list",
+    "mcpServer/tool/call",
+    "mcpServer/tool/call"
+  ],
+  "calls": {
+    "capabilities": {
+      "ok": true,
+      "offline": true,
+      "task_execution": false
+    },
+    "list_projects": {
+      "ok": true,
+      "project_count": 0
+    }
+  },
+  "cleanup_completed": true,
+  "client_version": "codex-cli 0.160.0",
+  "preflight_inventory_type": "list",
+  "preflight_entry_count": 3,
+  "scopepilot_registered_in_probe": true,
+  "other_enabled_mcp_count": 0,
+  "configured_server_names": [
+    "scopepilot"
+  ],
+  "runtime_status": "connected",
+  "tool_names": [
+    "analyze",
+    "capabilities",
+    "create_project",
+    "export_report",
+    "get_finding",
+    "get_project",
+    "get_task",
+    "import_har_text",
+    "import_tool_result_text",
+    "list_findings",
+    "list_projects",
+    "list_tasks"
+  ],
+  "server_info": {
+    "name": "scopepilot",
+    "version": "1.0.0"
+  },
+  "elapsed_seconds": 1.785
+}

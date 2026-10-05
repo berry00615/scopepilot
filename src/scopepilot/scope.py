@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from urllib.parse import unquote, urlsplit
+from urllib.parse import urlsplit
+from .url_paths import decoded_path, encoded_path
 
 from .schemas import PolicyCreate, PolicyStatus, ScopeRule
 
@@ -17,7 +18,7 @@ def _default_port(scheme: str) -> int | None:
 
 
 def _matches(rule: ScopeRule, scheme: str, host: str, port: int, path: str) -> bool:
-    prefix = rule.path_prefix.rstrip("/") or "/"
+    prefix = decoded_path(rule.path_prefix).rstrip("/") or "/"
     path_matches = prefix == "/" or path == prefix or path.startswith(prefix + "/")
     return (
         rule.scheme == scheme
@@ -35,21 +36,18 @@ def evaluate_url(policy: PolicyCreate, url: str, now: datetime | None = None) ->
         return ScopeDecision(False, "policy is not currently valid")
     try:
         parsed = urlsplit(url)
-        if parsed.username or parsed.password or parsed.fragment:
+        if parsed.username or parsed.password or parsed.fragment or any(ord(c) < 32 for c in url):
             return ScopeDecision(False, "ambiguous URL component is not allowed")
         scheme = parsed.scheme.lower()
         host = (parsed.hostname or "").rstrip(".").lower().encode("idna").decode("ascii")
-        port = parsed.port or _default_port(scheme)
+        port = parsed.port if parsed.port is not None else _default_port(scheme)
         raw_path = parsed.path or "/"
-        path = unquote(raw_path)
-        if scheme not in {"http", "https"} or not host or port is None:
+        path = decoded_path(raw_path)
+        if scheme not in {"http", "https"} or not host or port is None or port == 0:
             return ScopeDecision(False, "URL must contain an HTTP(S) scheme and exact host")
-        if "%2f" in raw_path.lower() or "%5c" in raw_path.lower() or "\\" in path:
-            return ScopeDecision(False, "ambiguous encoded path separator")
-        if any(part in {".", ".."} for part in path.split("/")):
-            return ScopeDecision(False, "dot path segments are not allowed")
         display_host = f"[{host}]" if ":" in host else host
-        normalized = f"{scheme}://{display_host}:{port}{path}"
+        normalized_path = encoded_path(path)
+        normalized = f"{scheme}://{display_host}:{port}{normalized_path}"
     except (ValueError, UnicodeError):
         return ScopeDecision(False, "URL could not be parsed unambiguously")
 

@@ -1,20 +1,55 @@
 <!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ScopePilot</title>
-  <style>
-    :root{--ink:#17202a;--muted:#65717e;--line:#dce3ea;--blue:#1665c1;--bg:#f6f8fb}*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,sans-serif;color:var(--ink);background:var(--bg)}main{max-width:980px;margin:42px auto;padding:0 20px}h1{margin-bottom:4px}h2{margin-top:0}.notice{background:#eef6ff;border-left:4px solid var(--blue);padding:12px 16px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}.card{background:white;border:1px solid var(--line);border-radius:12px;padding:20px}label{display:block;margin:10px 0 4px;color:var(--muted)}input{width:100%;padding:9px 10px;border:1px solid #b9c4cf;border-radius:7px}button,.button{display:inline-block;margin-top:14px;border:0;border-radius:7px;padding:9px 14px;background:var(--blue);color:white;cursor:pointer;text-decoration:none}.project{padding:12px 0;border-bottom:1px solid var(--line)}.project:last-child{border:0}code{font-size:12px;color:var(--muted)}.error{color:#a32020;white-space:pre-wrap}@media(max-width:760px){.grid{grid-template-columns:1fr}}
-  </style>
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>项目总览 · ScopePilot</title>
+<style>
+:root{--ink:#172e28;--muted:#64766f;--line:#dce5de;--brand:#174f3d;--bg:#f2f5ef;--soft:#e9f1e8}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--bg);font:14px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1180px;margin:auto;padding:25px 28px 45px}a{color:var(--brand);text-underline-offset:3px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding-bottom:22px;border-bottom:1px solid var(--line)}.brand{display:flex;gap:10px;align-items:center;font-size:18px;font-weight:750;text-decoration:none}.brandmark{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--brand);color:#fff;font-size:12px}.topbar>a:last-child{font-size:13px}header{margin:32px 0 26px}.eyebrow{font-size:12px;color:var(--muted);letter-spacing:1px}h1{font-size:32px;line-height:1.3;margin:8px 0 10px}h2{font-size:19px;margin:0 0 6px}p{margin:8px 0}.muted{color:var(--muted)}.tiny{font-size:12px}.layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:start}.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:24px}.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.badge{padding:3px 9px;background:var(--soft);color:var(--brand);border-radius:5px;font-size:12px}.project{padding:18px 0;border-top:1px solid var(--line)}.project:first-child{border-top:0;padding-top:0}.project:last-child{padding-bottom:0}.project-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.project h3{font-size:17px;margin:0 0 5px;overflow-wrap:anywhere}.project p{overflow-wrap:anywhere}code{font:11px/1.6 ui-monospace,Consolas,monospace;overflow-wrap:anywhere;color:var(--muted)}button,.button{font:600 13px/1.5 system-ui,sans-serif;display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:8px;padding:10px 14px;background:var(--brand);color:#fff;text-decoration:none;cursor:pointer;white-space:nowrap}.button.secondary{background:#fff;color:var(--brand);border-color:var(--line);padding:7px 11px}button:hover,.button:hover{filter:brightness(.94)}button:disabled{opacity:.5;cursor:not-allowed}label{display:block;color:var(--muted);font-size:12px;margin:13px 0 5px}input,select{width:100%;min-width:0;font:inherit;padding:9px 10px;border:1px solid #c8d5cc;border-radius:7px;background:white;color:var(--ink)}input[type=radio]{width:auto;accent-color:var(--brand)}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #85b79b;outline-offset:3px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.form-grid .full{grid-column:1/-1}.project-mode{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:17px 0 13px}.project-mode label{padding:11px;background:var(--bg);border:1px solid var(--line);border-radius:8px;margin:0;color:var(--ink);display:flex;gap:7px;align-items:flex-start;font-size:13px}.project-mode input{margin:5px 0 0}.project-mode small{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:3px}.hint{background:var(--soft);color:#476050;padding:12px 14px;border-radius:8px;font-size:12px}.empty{text-align:center;padding:44px 16px;border:1px dashed var(--line);border-radius:9px;background:#f8faf6}.empty strong{display:block;margin-bottom:8px;font-size:16px}.features{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.features strong{font-size:13px}.features p{font-size:12px;color:var(--muted)}.error{color:#9b352e;background:#fff0ed;border:1px solid #e8c7c2;border-radius:8px;padding:12px;white-space:pre-wrap;overflow-wrap:anywhere}.error:empty{display:none}.footer{font-size:12px;color:var(--muted);margin-top:24px}.form-submit{width:100%;margin-top:20px}@media(max-width:850px){.layout{grid-template-columns:1fr}.card{padding:22px}}@media(max-width:520px){main{padding:18px 14px 30px}header{margin:26px 0 22px}h1{font-size:28px}.card{padding:18px}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.project-mode{grid-template-columns:1fr}.project-top{flex-wrap:wrap}.features{grid-template-columns:1fr}.topbar{padding-bottom:18px}.brand{font-size:16px}}
+</style></head>
 <body><main>
-  <h1>ScopePilot</h1><p class="notice">本地授权安全研究工作台。不会向研究目标发送请求，也不会自动确认或提交报告。</p>
-  <div class="grid">
-    <section class="card"><h2>创建本地项目</h2><form id="project-form">
-      <label>项目名称</label><input name="name" required value="Local lab"><label>负责人</label><input name="owner" required value="local researcher"><label>授权来源</label><input name="reference" required value="self-owned local lab"><label>允许的协议</label><input name="scheme" required value="http" pattern="https?"><label>精确主机</label><input name="host" required value="127.0.0.1"><label>端口</label><input name="port" required type="number" min="1" max="65535" value="3000"><label>路径前缀</label><input name="path" required value="/"><label>授权到期时间</label><input name="until" required type="datetime-local"><button type="submit">创建并进入工作台</button><p id="form-error" class="error"></p>
-    </form></section>
-    <section class="card"><h2>已有项目</h2>{% if projects %}{% for p in projects %}<div class="project"><strong>{{ p.name }}</strong><br>{{ p.owner }} · 策略 v{{ p.policy_version }}<br><code>{{ p.id }}</code><br><a class="button" href="/workspace/{{ p.id }}">打开工作台</a></div>{% endfor %}{% else %}<p>尚无项目。可创建本地合成项目后导入示例 HAR。</p>{% endif %}<p><a href="/docs">开发者 API 文档</a></p></section>
-  </div>
+<nav class="topbar" aria-label="主导航"><a href="/" class="brand"><span class="brandmark" aria-hidden="true">SP</span>ScopePilot</a><a href="/docs">API 文档</a></nav>
+<header><div class="eyebrow">本地授权安全研究</div><h1>项目总览</h1><p class="muted">整理授权材料、定位证据，再完成有依据的人工复核。</p></header>
+<div class="layout">
+<section class="card"><div class="card-head"><h2>我的项目</h2><span id="project-count" class="badge">{{ projects|length }} 个项目</span></div>
+{% if projects %}<div id="project-list">{% for p in projects %}<article class="project"><div class="project-top"><div><h3>{{ p.name }}</h3><p class="muted tiny">{{ p.owner }} · 策略 v{{ p.policy_version }}</p></div><a class="button secondary open-project" href="/workspace/{{ p.id }}">进入工作区 →</a></div><code>{{ p.id }}</code></article>{% endfor %}</div>
+{% else %}<div class="empty" id="projects-empty"><strong>创建第一个项目</strong><p class="muted">可以先创建自有合成项目，导入示例材料了解工作流程。</p></div>{% endif %}
+<div class="features"><div><strong>材料与证据</strong><p>导入 HAR、Nuclei 和 Gitleaks 结果，记录脱敏证据与原始来源。</p></div><div><strong>复核与报告</strong><p>区分漏洞线索与配置加固；确认需要成功判据、证据和必要对照。</p></div></div>
+<p class="hint">主动目标请求默认关闭。模拟任务仅演示生命周期，不创建漏洞发现。</p>
+</section>
+<section class="card" aria-labelledby="create-title"><h2 id="create-title">创建项目</h2><p class="muted tiny">明确授权来源和目标范围。创建项目不会向目标发送请求。</p>
+<form id="project-form">
+<div class="project-mode" role="group" aria-label="项目初始化方式"><label for="mode-synthetic"><input type="radio" id="mode-synthetic" name="project_mode" value="synthetic" checked><span><strong>合成材料项目</strong><small>预填本机地址，用于自有样例</small></span></label><label for="mode-authorized"><input type="radio" id="mode-authorized" name="project_mode" value="authorized"><span><strong>普通授权项目</strong><small>自行填写精确目标与授权</small></span></label></div>
+<p id="project-mode-note" class="hint">以下默认值仅用于自有合成材料，不代表对其他目标的授权。</p>
+<div class="form-grid">
+<div class="full"><label for="project-name">项目名称</label><input id="project-name" name="name" maxlength="120" required value="本地合成研究"></div>
+<div><label for="project-owner">负责人</label><input id="project-owner" name="owner" maxlength="120" required value="本地研究员"></div>
+<div><label for="project-scheme">允许协议</label><select id="project-scheme" name="scheme"><option value="http">HTTP</option><option value="https">HTTPS</option></select></div>
+<div class="full"><label for="project-reference">授权来源 / 依据</label><input id="project-reference" name="reference" minlength="3" maxlength="500" required value="自有合成材料，仅限本地验证"></div>
+<div><label for="project-host">精确主机</label><input id="project-host" name="host" maxlength="253" required value="127.0.0.1" placeholder="lab.example.test" autocomplete="off"></div>
+<div><label for="project-port">端口</label><input id="project-port" name="port" type="number" min="1" max="65535" required value="3000"></div>
+<div class="full"><label for="project-path">允许的路径前缀</label><input id="project-path" name="path" required value="/" pattern="/.*" placeholder="/api"></div>
+<div class="full"><label for="project-until">授权到期时间（本地时间）</label><input id="project-until" name="until" type="datetime-local" required></div>
+</div><button id="create-project" type="submit" class="form-submit">创建并进入工作区</button><p id="form-error" class="error" role="alert"></p></form>
+</section>
+</div><p class="footer">所有命中保留为待复核线索；ScopePilot 不会自动确认、提交或发送报告。</p>
 </main><script>
-const until=new Date(Date.now()+30*24*60*60*1000);until.setSeconds(0,0);document.querySelector('[name=until]').value=new Date(until.getTime()-until.getTimezoneOffset()*60000).toISOString().slice(0,16);
-document.getElementById('project-form').addEventListener('submit',async(event)=>{event.preventDefault();const f=new FormData(event.target);const payload={name:f.get('name'),owner:f.get('owner'),policy:{authorization_reference:f.get('reference'),valid_from:new Date().toISOString(),valid_until:new Date(f.get('until')).toISOString(),status:'active',allow:[{scheme:f.get('scheme'),host:f.get('host'),port:Number(f.get('port')),path_prefix:f.get('path')}],deny:[],external_model_egress:false}};const response=await fetch('/projects',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(response.ok){const data=await response.json();location.href='/workspace/'+data.id}else{document.getElementById('form-error').textContent=await response.text()}});
+'use strict';
+const until=new Date(Date.now()+30*24*60*60*1000);until.setSeconds(0,0);
+document.getElementById('project-until').value=new Date(until.getTime()-until.getTimezoneOffset()*60000).toISOString().slice(0,16);
+document.querySelectorAll('[name=project_mode]').forEach(input=>input.addEventListener('change',()=>{
+ const synthetic=document.getElementById('mode-synthetic').checked;
+ document.getElementById('project-name').value=synthetic?'本地合成研究':'';
+ document.getElementById('project-reference').value=synthetic?'自有合成材料，仅限本地验证':'';
+ document.getElementById('project-host').value=synthetic?'127.0.0.1':'';
+ document.getElementById('project-scheme').value=synthetic?'http':'https';
+ document.getElementById('project-port').value=synthetic?'3000':'443';
+ document.getElementById('project-path').value='/';
+ document.getElementById('project-mode-note').textContent=synthetic?'以下默认值仅用于自有合成材料，不代表对其他目标的授权。':'请依据实际授权填写精确主机、端口与路径，范围检查会逐条应用。';
+}));
+document.getElementById('project-form').addEventListener('submit',async event=>{
+ event.preventDefault();const button=document.getElementById('create-project'),error=document.getElementById('form-error');button.disabled=true;error.textContent='';
+ try{const fields=new FormData(event.target),expires=new Date(fields.get('until'));if(!Number.isFinite(expires.getTime())||expires.getTime()<=Date.now())throw new Error('授权到期时间必须晚于当前时间。');
+ const payload={name:fields.get('name'),owner:fields.get('owner'),policy:{authorization_reference:fields.get('reference'),valid_from:new Date().toISOString(),valid_until:expires.toISOString(),status:'active',allow:[{scheme:fields.get('scheme'),host:fields.get('host'),port:Number(fields.get('port')),path_prefix:fields.get('path')}],deny:[],external_model_egress:false}};
+ const response=await fetch('/projects',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+ if(!response.ok)throw new Error((await response.text())||'项目创建失败');const data=await response.json();location.href='/workspace/'+encodeURIComponent(data.id);
+ }catch(problem){error.textContent=problem.message||'连接失败，请重试。'}finally{button.disabled=false}
+});
 </script></body></html>
