@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ScopePilot</title>
+  <style>
+    body { font: 16px/1.5 system-ui, sans-serif; max-width: 880px; margin: 48px auto; padding: 0 20px; color: #17202a; }
+    .notice { background: #eef6ff; border-left: 4px solid #2673c7; padding: 12px 16px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    th, td { text-align: left; border-bottom: 1px solid #ddd; padding: 10px; }
+    code { background: #f5f5f5; padding: 2px 5px; }
+  </style>
+</head>
+<body>
+  <h1>ScopePilot</h1>
+  <p class="notice">离线授权安全研究工作台。当前版本不会向研究目标发送请求，也不会自动提交报告。</p>
+  <p>交互式 API 文档：<a href="/docs">/docs</a></p>
+  <h2>项目</h2>
+  {% if projects %}
+  <table><thead><tr><th>名称</th><th>负责人</th><th>编号</th><th>策略版本</th></tr></thead>
+    <tbody>{% for p in projects %}<tr><td>{{ p.name }}</td><td>{{ p.owner }}</td><td><code>{{ p.id }}</code></td><td>{{ p.policy_version }}</td></tr>{% endfor %}</tbody>
+  </table>
+  {% else %}<p>尚无项目。请从 <a href="/docs">API 文档</a> 创建第一个自建靶场项目。</p>{% endif %}
+</body>
+</html>

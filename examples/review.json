@@ -1,0 +1,8 @@
+{
+  "status": "confirmed",
+  "reviewer": "local researcher",
+  "actual_result": "Describe only the behavior actually observed with self-owned test accounts and objects.",
+  "tested_identity": "test-account-b",
+  "tested_object": "self-created-object-a",
+  "stop_reason": "Stopped after the single authorized hypothesis had enough evidence."
+}
