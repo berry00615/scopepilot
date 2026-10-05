@@ -7,7 +7,8 @@ from uuid import uuid4
 
 from .db import Database
 from .har import HarError, parse_har
-from .schemas import FindingStatus, PolicyCreate, ProjectCreate, ReviewCreate
+from .llm import LocalLlmGateway
+from .schemas import FindingStatus, IdentityCreate, ModelFinding, PolicyCreate, ProjectCreate, ReviewCreate
 
 
 def utcnow() -> str:
@@ -148,6 +149,75 @@ class ScopePilotService:
             "raw_retained": False,
         }
 
+    def list_artifacts(self, project_id: str) -> list[dict]:
+        with self.db.connection() as conn:
+            rows = conn.execute(
+                "SELECT * FROM artifacts WHERE project_id=? ORDER BY created_at DESC", (project_id,)
+            ).fetchall()
+        return self.db.rows(rows)
+
+    def delete_artifact(self, project_id: str, artifact_id: str) -> dict:
+        with self.db.connection() as conn:
+            policy_version, _ = self.current_policy(conn, project_id)
+            artifact = conn.execute(
+                "SELECT id FROM artifacts WHERE id=? AND project_id=?", (artifact_id, project_id)
+            ).fetchone()
+            if not artifact:
+                raise NotFoundError("artifact not found in project")
+            evidence_ids = [row["id"] for row in conn.execute(
+                "SELECT id FROM evidence WHERE artifact_id=? AND project_id=?", (artifact_id, project_id)
+            ).fetchall()]
+            finding_ids: list[str] = []
+            if evidence_ids:
+                evidence_set = set(evidence_ids)
+                for row in conn.execute(
+                    "SELECT id,evidence_refs FROM findings WHERE project_id=?", (project_id,)
+                ).fetchall():
+                    if evidence_set.intersection(json.loads(row["evidence_refs"])):
+                        finding_ids.append(row["id"])
+                if finding_ids:
+                    placeholders = ",".join("?" for _ in finding_ids)
+                    conn.execute(f"DELETE FROM reviews WHERE project_id=? AND finding_id IN ({placeholders})", (project_id, *finding_ids))
+                    conn.execute(f"DELETE FROM findings WHERE project_id=? AND id IN ({placeholders})", (project_id, *finding_ids))
+                placeholders = ",".join("?" for _ in evidence_ids)
+                conn.execute(f"DELETE FROM endpoints WHERE project_id=? AND evidence_id IN ({placeholders})", (project_id, *evidence_ids))
+                conn.execute(f"DELETE FROM evidence WHERE project_id=? AND id IN ({placeholders})", (project_id, *evidence_ids))
+            conn.execute("DELETE FROM artifacts WHERE id=? AND project_id=?", (artifact_id, project_id))
+            self._audit(conn, project_id, "artifact.delete", "artifact", artifact_id, "ok", policy_version)
+        return {"artifact_id": artifact_id, "deleted_evidence": len(evidence_ids), "deleted_findings": len(finding_ids)}
+
+    def create_identity(self, project_id: str, data: IdentityCreate) -> dict:
+        identity_id = new_id("ident")
+        with self.db.connection() as conn:
+            policy_version, _ = self.current_policy(conn, project_id)
+            try:
+                conn.execute(
+                    "INSERT INTO identity_contexts VALUES(?,?,?,?,?,?)",
+                    (identity_id, project_id, data.alias, data.role, data.ownership_notes, utcnow()),
+                )
+            except sqlite3.IntegrityError as exc:
+                raise ConflictError("identity alias already exists in project") from exc
+            self._audit(conn, project_id, "identity.create", "identity", identity_id, "ok", policy_version)
+        return {"id": identity_id, "project_id": project_id, **data.model_dump()}
+
+    def list_identities(self, project_id: str) -> list[dict]:
+        with self.db.connection() as conn:
+            rows = conn.execute(
+                "SELECT * FROM identity_contexts WHERE project_id=? ORDER BY alias", (project_id,)
+            ).fetchall()
+        return self.db.rows(rows)
+
+    def delete_identity(self, project_id: str, identity_id: str) -> dict:
+        with self.db.connection() as conn:
+            policy_version, _ = self.current_policy(conn, project_id)
+            cursor = conn.execute(
+                "DELETE FROM identity_contexts WHERE id=? AND project_id=?", (identity_id, project_id)
+            )
+            if cursor.rowcount != 1:
+                raise NotFoundError("identity not found in project")
+            self._audit(conn, project_id, "identity.delete", "identity", identity_id, "ok", policy_version)
+        return {"identity_id": identity_id, "deleted": True}
+
     def analyze(self, project_id: str) -> dict:
         """Create evidence-backed hypotheses. This method performs no network access."""
         created_ids: list[str] = []
@@ -191,6 +261,84 @@ class ScopePilotService:
                     created_ids.append(finding_id)
             self._audit(conn, project_id, "analysis.run", "project", project_id, f"created:{len(created_ids)}", policy_version)
         return {"created": len(created_ids), "finding_ids": created_ids, "engine": "deterministic-mvp"}
+
+    def analyze_with_local_llm(self, project_id: str, gateway: LocalLlmGateway) -> dict:
+        run_id = new_id("run")
+        with self.db.connection() as conn:
+            policy_version, policy = self.current_policy(conn, project_id)
+            self._ensure_policy_usable(policy, "local model analysis")
+            rows = conn.execute(
+                "SELECT id,payload FROM evidence WHERE project_id=? ORDER BY created_at,id LIMIT 100", (project_id,)
+            ).fetchall()
+        evidence = [self._model_evidence(row["id"], json.loads(row["payload"])) for row in rows]
+        if not evidence:
+            raise ValidationError("local model analysis requires accepted evidence")
+        input_digest = hashlib.sha256(json.dumps(evidence, sort_keys=True).encode()).hexdigest()
+        try:
+            output, duration_ms = gateway.analyze(evidence)
+            created_ids = self._store_model_findings(project_id, policy_version, output.findings, {item["id"] for item in evidence})
+        except Exception as exc:
+            error = str(exc)[:500]
+            with self.db.connection() as conn:
+                conn.execute(
+                    "INSERT INTO model_runs VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                    (run_id, project_id, "local-openai-compatible", gateway.settings.model, input_digest, len(evidence), 0, "failed", error, 0, utcnow()),
+                )
+                self._audit(conn, project_id, "analysis.local_llm", "model_run", run_id, "failed", policy_version)
+            if isinstance(exc, ValidationError):
+                raise
+            raise ValidationError(f"local model analysis failed: {error}") from exc
+        with self.db.connection() as conn:
+            conn.execute(
+                "INSERT INTO model_runs VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                (run_id, project_id, "local-openai-compatible", gateway.settings.model, input_digest, len(evidence), len(created_ids), "succeeded", None, duration_ms, utcnow()),
+            )
+            self._audit(conn, project_id, "analysis.local_llm", "model_run", run_id, f"created:{len(created_ids)}", policy_version)
+        return {"run_id": run_id, "created": len(created_ids), "finding_ids": created_ids, "engine": "local-llm", "duration_ms": duration_ms}
+
+    def _store_model_findings(self, project_id: str, expected_policy_version: int, findings: list[ModelFinding], allowed_refs: set[str]) -> list[str]:
+        created_ids: list[str] = []
+        with self.db.connection() as conn:
+            current_version, policy = self.current_policy(conn, project_id)
+            self._ensure_policy_usable(policy, "local model result storage")
+            if current_version != expected_policy_version:
+                raise ValidationError("policy changed while local model analysis was running")
+            for finding in findings:
+                refs = list(dict.fromkeys(finding.evidence_refs))
+                if not set(refs).issubset(allowed_refs):
+                    raise ValidationError("local model referenced missing or cross-project evidence")
+                refs_json = json.dumps(refs)
+                duplicate = conn.execute(
+                    "SELECT id FROM findings WHERE project_id=? AND finding_type=? AND evidence_refs=? AND claim=?",
+                    (project_id, finding.finding_type, refs_json, finding.claim),
+                ).fetchone()
+                if duplicate:
+                    continue
+                finding_id = new_id("find")
+                conn.execute(
+                    "INSERT INTO findings VALUES(?,?,?,?,?,?,?,?,?,?)",
+                    (
+                        finding_id, project_id, finding.finding_type, finding.claim, refs_json,
+                        finding.missing_information, finding.suggested_manual_check,
+                        finding.confidence, FindingStatus.PENDING.value, utcnow(),
+                    ),
+                )
+                created_ids.append(finding_id)
+        return created_ids
+
+    @staticmethod
+    def _model_evidence(evidence_id: str, payload: dict) -> dict:
+        request_body = payload.get("request_body")
+        response_body = payload.get("response_body")
+        return {
+            "id": evidence_id,
+            "method": payload.get("method"),
+            "path": payload.get("path"),
+            "query_keys": sorted((payload.get("query") or {}).keys()),
+            "request_body_keys": sorted(request_body.keys()) if isinstance(request_body, dict) else [],
+            "response_status": payload.get("response_status"),
+            "response_body_keys": sorted(response_body.keys()) if isinstance(response_body, dict) else [],
+        }
 
     def list_endpoints(self, project_id: str) -> list[dict]:
         with self.db.connection() as conn:
@@ -241,9 +389,10 @@ class ScopePilotService:
             self._ensure_policy_usable(policy, "report export")
             rows = conn.execute(
                 "SELECT f.*,r.reviewer,r.actual_result,r.tested_identity,r.tested_object,r.stop_reason,r.created_at review_time "
-                "FROM findings f JOIN reviews r ON r.finding_id=f.id AND r.project_id=f.project_id "
-                "WHERE f.project_id=? AND f.status=? ORDER BY r.created_at",
-                (project_id, FindingStatus.CONFIRMED.value),
+                "FROM findings f JOIN reviews r ON r.rowid=(SELECT r2.rowid FROM reviews r2 "
+                "WHERE r2.finding_id=f.id AND r2.project_id=f.project_id ORDER BY r2.created_at DESC,r2.rowid DESC LIMIT 1) "
+                "WHERE f.project_id=? AND f.status=? AND r.status=? ORDER BY r.created_at",
+                (project_id, FindingStatus.CONFIRMED.value, FindingStatus.CONFIRMED.value),
             ).fetchall()
             if not rows:
                 raise ValidationError("no human-confirmed findings are available for export")

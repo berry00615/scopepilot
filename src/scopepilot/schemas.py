@@ -90,3 +90,33 @@ class ReviewCreate(BaseModel):
         if value == FindingStatus.PENDING:
             raise ValueError("a review must choose a human decision")
         return value
+
+
+class IdentityCreate(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    alias: str = Field(min_length=1, max_length=120)
+    role: str = Field(min_length=1, max_length=120)
+    ownership_notes: str = Field(min_length=1, max_length=1000)
+
+    @field_validator("alias", "role", "ownership_notes")
+    @classmethod
+    def reject_secret_material(cls, value: str) -> str:
+        lowered = value.lower()
+        if any(marker in lowered for marker in ("password=", "token=", "cookie=", "authorization:")):
+            raise ValueError("identity metadata must not contain credentials")
+        return value
+
+
+class ModelFinding(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    finding_type: str = Field(min_length=1, max_length=120)
+    claim: str = Field(min_length=3, max_length=2000)
+    evidence_refs: list[str] = Field(min_length=1, max_length=10)
+    missing_information: str = Field(min_length=1, max_length=2000)
+    suggested_manual_check: str = Field(min_length=3, max_length=2000)
+    confidence: float = Field(ge=0, le=1)
+
+
+class ModelOutput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    findings: list[ModelFinding] = Field(default_factory=list, max_length=50)

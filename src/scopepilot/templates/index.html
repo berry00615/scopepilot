@@ -1,26 +1,20 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ScopePilot</title>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ScopePilot</title>
   <style>
-    body { font: 16px/1.5 system-ui, sans-serif; max-width: 880px; margin: 48px auto; padding: 0 20px; color: #17202a; }
-    .notice { background: #eef6ff; border-left: 4px solid #2673c7; padding: 12px 16px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 24px; }
-    th, td { text-align: left; border-bottom: 1px solid #ddd; padding: 10px; }
-    code { background: #f5f5f5; padding: 2px 5px; }
+    :root{--ink:#17202a;--muted:#65717e;--line:#dce3ea;--blue:#1665c1;--bg:#f6f8fb}*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,sans-serif;color:var(--ink);background:var(--bg)}main{max-width:980px;margin:42px auto;padding:0 20px}h1{margin-bottom:4px}h2{margin-top:0}.notice{background:#eef6ff;border-left:4px solid var(--blue);padding:12px 16px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}.card{background:white;border:1px solid var(--line);border-radius:12px;padding:20px}label{display:block;margin:10px 0 4px;color:var(--muted)}input{width:100%;padding:9px 10px;border:1px solid #b9c4cf;border-radius:7px}button,.button{display:inline-block;margin-top:14px;border:0;border-radius:7px;padding:9px 14px;background:var(--blue);color:white;cursor:pointer;text-decoration:none}.project{padding:12px 0;border-bottom:1px solid var(--line)}.project:last-child{border:0}code{font-size:12px;color:var(--muted)}.error{color:#a32020;white-space:pre-wrap}@media(max-width:760px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
-<body>
-  <h1>ScopePilot</h1>
-  <p class="notice">离线授权安全研究工作台。当前版本不会向研究目标发送请求，也不会自动提交报告。</p>
-  <p>交互式 API 文档：<a href="/docs">/docs</a></p>
-  <h2>项目</h2>
-  {% if projects %}
-  <table><thead><tr><th>名称</th><th>负责人</th><th>编号</th><th>策略版本</th></tr></thead>
-    <tbody>{% for p in projects %}<tr><td>{{ p.name }}</td><td>{{ p.owner }}</td><td><code>{{ p.id }}</code></td><td>{{ p.policy_version }}</td></tr>{% endfor %}</tbody>
-  </table>
-  {% else %}<p>尚无项目。请从 <a href="/docs">API 文档</a> 创建第一个自建靶场项目。</p>{% endif %}
-</body>
-</html>
+<body><main>
+  <h1>ScopePilot</h1><p class="notice">本地授权安全研究工作台。不会向研究目标发送请求，也不会自动确认或提交报告。</p>
+  <div class="grid">
+    <section class="card"><h2>创建本地项目</h2><form id="project-form">
+      <label>项目名称</label><input name="name" required value="Local lab"><label>负责人</label><input name="owner" required value="local researcher"><label>授权来源</label><input name="reference" required value="self-owned local lab"><label>允许的协议</label><input name="scheme" required value="http" pattern="https?"><label>精确主机</label><input name="host" required value="127.0.0.1"><label>端口</label><input name="port" required type="number" min="1" max="65535" value="3000"><label>路径前缀</label><input name="path" required value="/"><label>授权到期时间</label><input name="until" required type="datetime-local"><button type="submit">创建并进入工作台</button><p id="form-error" class="error"></p>
+    </form></section>
+    <section class="card"><h2>已有项目</h2>{% if projects %}{% for p in projects %}<div class="project"><strong>{{ p.name }}</strong><br>{{ p.owner }} · 策略 v{{ p.policy_version }}<br><code>{{ p.id }}</code><br><a class="button" href="/workspace/{{ p.id }}">打开工作台</a></div>{% endfor %}{% else %}<p>尚无项目。可创建本地合成项目后导入示例 HAR。</p>{% endif %}<p><a href="/docs">开发者 API 文档</a></p></section>
+  </div>
+</main><script>
+const until=new Date(Date.now()+30*24*60*60*1000);until.setSeconds(0,0);document.querySelector('[name=until]').value=new Date(until.getTime()-until.getTimezoneOffset()*60000).toISOString().slice(0,16);
+document.getElementById('project-form').addEventListener('submit',async(event)=>{event.preventDefault();const f=new FormData(event.target);const payload={name:f.get('name'),owner:f.get('owner'),policy:{authorization_reference:f.get('reference'),valid_from:new Date().toISOString(),valid_until:new Date(f.get('until')).toISOString(),status:'active',allow:[{scheme:f.get('scheme'),host:f.get('host'),port:Number(f.get('port')),path_prefix:f.get('path')}],deny:[],external_model_egress:false}};const response=await fetch('/projects',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(response.ok){const data=await response.json();location.href='/workspace/'+data.id}else{document.getElementById('form-error').textContent=await response.text()}});
+</script></body></html>

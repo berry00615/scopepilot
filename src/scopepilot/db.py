@@ -49,6 +49,17 @@ CREATE TABLE IF NOT EXISTS audit_events (
   object_type TEXT NOT NULL, object_id TEXT NOT NULL, result TEXT NOT NULL,
   policy_version INTEGER, created_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS identity_contexts (
+  id TEXT PRIMARY KEY, project_id TEXT NOT NULL, alias TEXT NOT NULL, role TEXT NOT NULL,
+  ownership_notes TEXT NOT NULL, created_at TEXT NOT NULL, UNIQUE(project_id, alias),
+  FOREIGN KEY(project_id) REFERENCES projects(id)
+);
+CREATE TABLE IF NOT EXISTS model_runs (
+  id TEXT PRIMARY KEY, project_id TEXT NOT NULL, provider TEXT NOT NULL, model TEXT NOT NULL,
+  input_digest TEXT NOT NULL, evidence_count INTEGER NOT NULL, output_count INTEGER NOT NULL,
+  status TEXT NOT NULL, error TEXT, duration_ms INTEGER NOT NULL, created_at TEXT NOT NULL,
+  FOREIGN KEY(project_id) REFERENCES projects(id)
+);
 """
 
 

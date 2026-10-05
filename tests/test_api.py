@@ -41,6 +41,10 @@ def test_http_api_smoke(tmp_path, monkeypatch):
     assert analysis.json()["created"] == 1
     assert client.post(f"/projects/{project_id}/reports").status_code == 422
     assert client.get("/health").json()["target_execution"] is False
+    assert "frame-ancestors 'none'" in client.get("/").headers["content-security-policy"]
+    workspace = client.get(f"/workspace/{project_id}")
+    assert workspace.status_code == 200
+    assert "Local model" in workspace.text or "本地 LLM" in workspace.text
 
 
 def test_foreign_origin_cannot_change_state():
@@ -49,3 +53,12 @@ def test_foreign_origin_cannot_change_state():
     assert response.status_code == 403
     same_origin = client.post("/projects", headers={"Origin": "http://testserver"}, json={})
     assert same_origin.status_code == 422
+
+
+def test_invalid_local_model_configuration_is_reported_as_validation_error(monkeypatch):
+    monkeypatch.setenv("SCOPEPILOT_LOCAL_LLM_URL", "https://api.example.com/v1/chat/completions")
+    monkeypatch.setenv("SCOPEPILOT_LOCAL_LLM_MODEL", "unsafe-remote")
+    client = TestClient(api.app)
+    response = client.post("/projects/missing/analysis-runs/local-llm")
+    assert response.status_code == 422
+    assert "loopback" in response.text

@@ -1,4 +1,4 @@
-# ScopePilot v0.1
+# ScopePilot v0.2
 
 [![Tests](https://github.com/berry00615/scopepilot/actions/workflows/tests.yml/badge.svg)](https://github.com/berry00615/scopepilot/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -12,7 +12,7 @@ ScopePilot 是一个本地、离线优先的授权安全研究工作台。当前
 5. 由研究者保存验证结论；
 6. 只为人工确认的发现生成 Markdown 报告。
 
-该版本没有向研究目标发送请求的代码，也不自动提交报告。规则分析只提出核查假设，不能确认漏洞。
+该版本没有向研究目标发送请求的代码，也不自动提交报告。它可选连接数值回环地址上的 OpenAI 兼容本地模型；规则和模型都只能提出核查假设，不能确认漏洞。
 
 ## 能做什么
 
@@ -23,6 +23,8 @@ ScopePilot 是一个本地、离线优先的授权安全研究工作台。当前
 - 保存人工验证使用的测试身份、测试对象、实际结果和停止原因。
 - 仅为人工确认且证据仍然存在的发现生成 Markdown 报告草稿。
 - 记录项目、策略、导入、分析、审核和报告操作，便于追溯。
+- 通过完整网页工作台创建项目、导入、管理测试身份、分析、审核和生成报告。
+- 可选使用 OpenAI 兼容的本地模型；只发送证据编号、方法、路径、字段名和响应状态。
 
 它是研究工作台，不是漏洞扫描器。请只处理自己拥有或得到明确授权的系统和材料。
 
@@ -36,7 +38,19 @@ python3 -m venv .venv
 .venv/bin/scopepilot
 ```
 
-打开 `http://127.0.0.1:8000` 查看项目页，打开 `http://127.0.0.1:8000/docs` 使用交互式 API。
+打开 `http://127.0.0.1:8000` 使用完整工作台，打开 `http://127.0.0.1:8000/docs` 使用交互式 API。
+
+### 可选本地模型
+
+ScopePilot 支持提供 `/v1/chat/completions` 的 OpenAI 兼容本地服务，例如启用了兼容接口的本地推理程序。地址必须是数值回环 IP，重定向和系统代理均被禁用：
+
+```bash
+export SCOPEPILOT_LOCAL_LLM_URL=http://127.0.0.1:11434/v1/chat/completions
+export SCOPEPILOT_LOCAL_LLM_MODEL=your-local-model
+.venv/bin/scopepilot
+```
+
+不设置这两个变量时，本地模型按钮保持禁用，规则分析仍可使用。模型只接收结构摘要，但材料本身仍应先按项目规定处理。
 
 运行测试：
 
@@ -64,8 +78,8 @@ python3 -m venv .venv
 
 - 只支持 HAR；不支持 Burp XML、OpenAPI 或 JS AST。
 - Scope 只支持精确主机，不支持通配域名。
-- 分析器是确定性规则 MVP，尚未连接 LLM；这样可以先验证授权、证据和人工状态闭环。
-- Web 页面只展示项目，完整操作通过 `/docs` 完成。
+- 本地 LLM 适配器已提供，但项目不捆绑或自动下载模型；模型质量取决于用户选择和固定评估。
+- 身份档案只保存别名、角色和对象归属说明，不保存登录凭据，也不会代替人工验证工具。
 - 直接在普通本机进程运行适合合成数据开发，尚未提供经过验证的解析/分析网络隔离容器配置；真实材料不得据此视为完成安全验收。
 - P0 不保留上传原件；API 将文件读入有限内存并只写脱敏后的结构化记录。生产级故障隔离和重启清理仍需后续容器部署阶段验证。
 
