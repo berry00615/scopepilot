@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+import json
 from pathlib import Path
 
 import pytest
@@ -60,13 +61,28 @@ def test_full_offline_workflow(tmp_path: Path):
         tested_object="synthetic-order-a",
         stop_reason="stopped before drawing a conclusion",
     ))
+    controls = {"log": {"entries": [
+        {"request": {"method": "GET", "url": "http://127.0.0.1:3000/api/orders?orderId=synthetic-order-17",
+                     "headers": [{"name": "X-Synthetic-Identity", "value": "account-b"}]},
+         "response": {"status": 200, "content": {"mimeType": "application/json", "text": '{"owner":"synthetic-account-a","status":"created"}'}}},
+        {"request": {"method": "GET", "url": "http://127.0.0.1:3000/api/orders?orderId=synthetic-order-17", "headers": []},
+         "response": {"status": 403, "content": {"mimeType": "application/json", "text": '{"error":"denied"}'}}},
+    ]}}
+    service.import_har(project["id"], "synthetic-controls.har", json.dumps(controls).encode())
+    review_refs = [row["id"] for row in service.list_evidence(project["id"])]
     service.review_finding(project["id"], finding["id"], ReviewCreate(
         status=FindingStatus.CONFIRMED,
         reviewer="researcher",
-        actual_result="自有账号 B 无法访问账号 A 的对象；本合成演示将该项人工标记为已确认。",
+        actual_result="自有账号 B 成功读取账号 A 的自建对象，与预期的跨账号拒绝不符。",
         tested_identity="synthetic-account-b",
         tested_object="synthetic-order-a",
         stop_reason="完成单一合成假设验证后停止",
+        success_criteria="非所有者账号 B 能读取账号 A 的自建对象内容。",
+        criteria_met=True,
+        evidence_refs=review_refs,
+        control_required=True,
+        control_result="账号 A 的所有者基线为 200；无会话对照为 403；账号 B 为 200 且返回 A 的自建对象。",
+        control_passed=True,
     ))
     report = service.report_markdown(project["id"])
     assert "人工确认发现报告" in report

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>API 参考 · ScopePilot</title>
+<style>
+:root{--ink:#172e28;--muted:#64766f;--line:#dce5de;--brand:#174f3d;--bg:#f2f5ef}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1160px;margin:auto;padding:25px 28px 45px}a{color:var(--brand);text-underline-offset:3px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding-bottom:20px;border-bottom:1px solid var(--line)}.brand{font-size:18px;font-weight:750;text-decoration:none}.links{display:flex;gap:18px;font-size:13px}header{margin:28px 0 22px}h1{font-size:28px;line-height:1.3;margin:6px 0 10px}h2{font-size:19px;margin:0 0 12px}h3{font-size:14px;margin:17px 0 7px}p{margin:8px 0}.muted{color:var(--muted)}.tiny{font-size:12px}.notice{background:#e9f1e8;padding:13px 15px;border-radius:9px;color:#476050}.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px;align-items:start}.card{background:white;border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:20px}.index ul{list-style:none;margin:0;padding:0}.index li{padding:7px 0;border-bottom:1px solid var(--line)}.index li:last-child{border:0}.index a{font:11px/1.6 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}.endpoint{scroll-margin-top:20px;min-width:0}.path{font:600 14px/1.6 ui-monospace,Consolas,monospace;overflow-wrap:anywhere;margin:0 0 13px}.operation{padding-top:13px;margin-top:13px;border-top:1px solid var(--line)}.operation:first-of-type{padding-top:0;margin-top:0;border-top:0}summary{cursor:pointer;font-weight:600;overflow-wrap:anywhere;line-height:1.8}summary:focus-visible,a:focus-visible{outline:3px solid #85b79b;outline-offset:3px}.method{display:inline-block;padding:1px 7px;margin-right:7px;border-radius:4px;background:#e9eef8;color:#415c8c;font:700 11px/1.8 ui-monospace,Consolas,monospace}.method.POST{background:#e4f1e7;color:#276342}.method.DELETE{background:#f9e4e1;color:#9b352e}.method.PUT,.method.PATCH{background:#fff0d4;color:#8b611b}.description{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;border:1px solid var(--line);border-radius:8px;background:#f5f7f3;padding:13px;font:12px/1.7 ui-monospace,Consolas,monospace;max-height:420px;overflow:auto;margin:8px 0}code{font:12px/1.6 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}.schemas{scroll-margin-top:20px}.schema-item{padding:11px 0;border-top:1px solid var(--line)}.empty{color:var(--muted);font-size:12px}.footer{font-size:12px;color:var(--muted);margin-top:22px}@media(max-width:800px){.layout{grid-template-columns:minmax(0,1fr)}.index ul{columns:2;column-gap:22px}.index li{break-inside:avoid}}@media(max-width:500px){main{padding:18px 13px 30px}.card{padding:16px}.links{gap:10px;font-size:12px}.index ul{columns:1}h1{font-size:25px}.path{font-size:12px}}
+</style>
+</head>
+<body><main>
+<nav class="topbar" aria-label="主导航"><a class="brand" href="/">ScopePilot</a><div class="links"><a href="/">项目列表</a><a href="/openapi.json">OpenAPI JSON</a></div></nav>
+<header><p class="muted tiny">本地离线参考 · OpenAPI {{ schema.get('openapi', '') }}</p><h1>API 参考</h1><p class="muted">{{ schema.get('info', {}).get('title', 'ScopePilot') }} · {{ schema.get('info', {}).get('version', '') }}</p><p class="notice">此页面只展示接口定义，不能直接发起请求。接口参数、请求体和响应结构均来自当前服务的 OpenAPI 文档；调用仍需遵守项目授权与复核条件。</p></header>
+<div class="layout">
+<aside class="card index" aria-label="接口目录"><h2>接口目录</h2><ul>{% for path, operations in schema.get('paths', {}).items() %}<li><a href="#path-{{ loop.index }}">{{ path }}</a></li>{% endfor %}<li><a href="#schemas">数据结构 · components.schemas</a></li></ul></aside>
+<div>
+{% for path, operations in schema.get('paths', {}).items() %}
+<section class="card endpoint" id="path-{{ loop.index }}"><h2 class="path">{{ path }}</h2>
+{% if operations.get('summary') %}<p>{{ operations.get('summary') }}</p>{% endif %}
+{% if operations.get('description') %}<p class="description">{{ operations.get('description') }}</p>{% endif %}
+{% if operations.get('parameters') %}<details><summary>路径级公共参数</summary><pre>{{ operations.get('parameters')|tojson(indent=2) }}</pre></details>{% endif %}
+{% for method, operation in operations.items() %}
+{% if method in ['get','post','put','patch','delete','head','options','trace'] %}
+<details class="operation"><summary><span class="method {{ method|upper }}">{{ method|upper }}</span>{{ operation.get('summary') or operation.get('operationId') or '接口定义' }}{% if operation.get('deprecated') %} · 已弃用{% endif %}</summary>
+{% if operation.get('description') %}<p class="description">{{ operation.get('description') }}</p>{% endif %}
+{% if operation.get('operationId') %}<p class="muted tiny">操作标识：<code>{{ operation.get('operationId') }}</code></p>{% endif %}
+{% if operation.get('tags') %}<p class="muted tiny">标签：{{ operation.get('tags')|join('、') }}</p>{% endif %}
+<h3>接口参数 · parameters</h3>{% if operation.get('parameters') %}<pre>{{ operation.get('parameters')|tojson(indent=2) }}</pre>{% else %}<p class="empty">未声明接口级参数；如有路径级公共参数，请一并查看。</p>{% endif %}
+<h3>请求体 · requestBody</h3>{% if operation.get('requestBody') %}<pre>{{ operation.get('requestBody')|tojson(indent=2) }}</pre>{% else %}<p class="empty">未声明请求体。</p>{% endif %}
+<h3>响应 · responses</h3>{% if operation.get('responses') %}<pre>{{ operation.get('responses')|tojson(indent=2) }}</pre>{% else %}<p class="empty">未声明响应结构。</p>{% endif %}
+{% if operation.get('security') %}<h3>安全要求 · security</h3><pre>{{ operation.get('security')|tojson(indent=2) }}</pre>{% endif %}
+</details>
+{% endif %}
+{% endfor %}
+</section>
+{% else %}<section class="card"><p class="empty">当前服务没有声明接口。</p></section>{% endfor %}
+<section class="card schemas" id="schemas"><h2>数据结构</h2><p class="muted tiny">请求体和响应中的 $ref 对应下列 components.schemas 定义。</p>
+{% for name, definition in schema.get('components', {}).get('schemas', {}).items() %}<details class="schema-item"><summary>{{ name }}</summary><pre>{{ definition|tojson(indent=2) }}</pre></details>{% else %}<p class="empty">当前服务没有声明复用数据结构。</p>{% endfor %}
+</section>
+</div></div><p class="footer">本页无需外部脚本、样式或网络资源。机器可读的完整定义见 <a href="/openapi.json">/openapi.json</a>。</p>
+</main></body></html>

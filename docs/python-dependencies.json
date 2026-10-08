@@ -1,0 +1,771 @@
+[
+  {
+    "name": "annotated-doc",
+    "version": "0.0.5",
+    "source": "https://pypi.org/project/annotated-doc/0.0.5/",
+    "project_urls": {
+      "Changelog": "https://github.com/fastapi/annotated-doc/release-notes.md",
+      "Documentation": "https://github.com/fastapi/annotated-doc",
+      "Homepage": "https://github.com/fastapi/annotated-doc",
+      "Issues": "https://github.com/fastapi/annotated-doc/issues",
+      "Repository": "https://github.com/fastapi/annotated-doc"
+    },
+    "license": "MIT",
+    "download_bytes": 5302,
+    "file": "annotated_doc-0.0.5-py3-none-any.whl",
+    "sha256": "117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "annotated-types",
+    "version": "0.8.0",
+    "source": "https://pypi.org/project/annotated-types/0.8.0/",
+    "project_urls": {
+      "Changelog": "https://github.com/annotated-types/annotated-types/releases",
+      "Homepage": "https://github.com/annotated-types/annotated-types",
+      "Source": "https://github.com/annotated-types/annotated-types"
+    },
+    "license": "MIT",
+    "download_bytes": 13427,
+    "file": "annotated_types-0.8.0-py3-none-any.whl",
+    "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "anyio",
+    "version": "4.15.1",
+    "source": "https://pypi.org/project/anyio/4.15.1/",
+    "project_urls": {
+      "Changelog": "https://anyio.readthedocs.io/en/stable/versionhistory.html",
+      "Documentation": "https://anyio.readthedocs.io/en/latest/",
+      "Issue tracker": "https://github.com/agronholm/anyio/issues",
+      "Source code": "https://github.com/agronholm/anyio"
+    },
+    "license": "MIT",
+    "download_bytes": 132079,
+    "file": "anyio-4.15.1-py3-none-any.whl",
+    "sha256": "6152fdbbf9a77fdec97731721bebf7c4c44f7c29b424b0065826173efc7ed101",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "attrs",
+    "version": "26.1.0",
+    "source": "https://pypi.org/project/attrs/26.1.0/",
+    "project_urls": {
+      "Changelog": "https://www.attrs.org/en/stable/changelog.html",
+      "Documentation": "https://www.attrs.org/",
+      "Funding": "https://github.com/sponsors/hynek",
+      "GitHub": "https://github.com/python-attrs/attrs",
+      "Tidelift": "https://tidelift.com/subscription/pkg/pypi-attrs?utm_source=pypi-attrs&utm_medium=pypi"
+    },
+    "license": "MIT",
+    "download_bytes": 67548,
+    "file": "attrs-26.1.0-py3-none-any.whl",
+    "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "certifi",
+    "version": "2026.7.22",
+    "source": "https://pypi.org/project/certifi/2026.7.22/",
+    "project_urls": {
+      "Homepage": "https://github.com/certifi/python-certifi",
+      "Source": "https://github.com/certifi/python-certifi"
+    },
+    "license": "MPL-2.0",
+    "download_bytes": 136983,
+    "file": "certifi-2026.7.22-py3-none-any.whl",
+    "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "cffi",
+    "version": "2.1.1",
+    "source": "https://pypi.org/project/cffi/2.1.1/",
+    "project_urls": {
+      "Changelog": "https://cffi.readthedocs.io/en/latest/whatsnew.html",
+      "Contact": "https://groups.google.com/forum/#!forum/python-cffi",
+      "Documentation": "https://cffi.readthedocs.io/",
+      "Download": "https://github.com/python-cffi/cffi/releases",
+      "Issue Tracker": "https://github.com/python-cffi/cffi/issues",
+      "Source Code": "https://github.com/python-cffi/cffi"
+    },
+    "license": "MIT-0",
+    "download_bytes": 187949,
+    "file": "cffi-2.1.1-cp314-cp314-win_amd64.whl",
+    "sha256": "3222ba5d678f80a030e6afbcc33dc1ae5cb45facabb61cee2c7016b8432fde48",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "click",
+    "version": "8.5.0",
+    "source": "https://pypi.org/project/click/8.5.0/",
+    "project_urls": {
+      "Changes": "https://click.palletsprojects.com/page/changes/",
+      "Chat": "https://discord.gg/pallets",
+      "Documentation": "https://click.palletsprojects.com/",
+      "Donate": "https://palletsprojects.com/donate",
+      "Source": "https://github.com/pallets/click/"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 125251,
+    "file": "click-8.5.0-py3-none-any.whl",
+    "sha256": "255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "colorama",
+    "version": "0.4.6",
+    "source": "https://pypi.org/project/colorama/0.4.6/",
+    "project_urls": {
+      "Homepage": "https://github.com/tartley/colorama"
+    },
+    "license": "See upstream metadata",
+    "download_bytes": 25335,
+    "file": "colorama-0.4.6-py2.py3-none-any.whl",
+    "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "cryptography",
+    "version": "50.0.2",
+    "source": "https://pypi.org/project/cryptography/50.0.2/",
+    "project_urls": {
+      "changelog": "https://cryptography.io/en/latest/changelog/",
+      "documentation": "https://cryptography.io/",
+      "homepage": "https://github.com/pyca/cryptography",
+      "issues": "https://github.com/pyca/cryptography/issues",
+      "source": "https://github.com/pyca/cryptography/"
+    },
+    "license": "Apache-2.0 OR BSD-3-Clause",
+    "download_bytes": 3824692,
+    "file": "cryptography-50.0.2-cp311-abi3-win_amd64.whl",
+    "sha256": "7afa5a6602a9f29af1f3a2965f831bae7c9d5d597b7cbb716d41ab3b7d89879c",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "editables",
+    "version": "0.6",
+    "source": "https://pypi.org/project/editables/0.6/",
+    "project_urls": {
+      "Documentation": "https://editables.readthedocs.io",
+      "Source": "https://github.com/pfmoore/editables",
+      "Tracker": "https://github.com/pfmoore/editables/issues"
+    },
+    "license": "See upstream metadata",
+    "download_bytes": 5438,
+    "file": "editables-0.6-py3-none-any.whl",
+    "sha256": "d70e4698078a1d033e7786d9c64e5be070d058a67c21417024d38a58ac20aa43",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "fastapi",
+    "version": "0.142.2",
+    "source": "https://pypi.org/project/fastapi/0.142.2/",
+    "project_urls": {
+      "Changelog": "https://fastapi.tiangolo.com/release-notes/",
+      "Documentation": "https://fastapi.tiangolo.com/",
+      "Homepage": "https://github.com/fastapi/fastapi",
+      "Issues": "https://github.com/fastapi/fastapi/issues",
+      "Repository": "https://github.com/fastapi/fastapi"
+    },
+    "license": "MIT",
+    "download_bytes": 144409,
+    "file": "fastapi-0.142.2-py3-none-any.whl",
+    "sha256": "bd5f4d81f1e93a88bcd77caf4dfe3c2dbffc3805407a0007e9a114c18b3a670b",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "greenlet",
+    "version": "3.5.6",
+    "source": "https://pypi.org/project/greenlet/3.5.6/",
+    "project_urls": {
+      "Changelog": "https://greenlet.readthedocs.io/en/latest/changes.html",
+      "Documentation": "https://greenlet.readthedocs.io",
+      "Homepage": "https://greenlet.readthedocs.io",
+      "Issues": "https://github.com/python-greenlet/greenlet/issues",
+      "Repository": "https://github.com/python-greenlet/greenlet"
+    },
+    "license": "MIT AND PSF-2.0",
+    "download_bytes": 327473,
+    "file": "greenlet-3.5.6-cp314-cp314-win_amd64.whl",
+    "sha256": "f8f0bd690e1a41294ac87905e8121c81a3761ec2583c768f13467428606c8c7a",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "h11",
+    "version": "0.16.0",
+    "source": "https://pypi.org/project/h11/0.16.0/",
+    "project_urls": {
+      "Homepage": "https://github.com/python-hyper/h11"
+    },
+    "license": "MIT",
+    "download_bytes": 37515,
+    "file": "h11-0.16.0-py3-none-any.whl",
+    "sha256": "63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "hatchling",
+    "version": "1.32.4",
+    "source": "https://pypi.org/project/hatchling/1.32.4/",
+    "project_urls": {
+      "History": "https://hatch.pypa.io/dev/history/hatchling/",
+      "Homepage": "https://hatch.pypa.io/latest/",
+      "Source": "https://github.com/pypa/hatch/tree/master/backend",
+      "Sponsor": "https://github.com/sponsors/ofek",
+      "Tracker": "https://github.com/pypa/hatch/issues"
+    },
+    "license": "MIT",
+    "download_bytes": 78748,
+    "file": "hatchling-1.32.4-py3-none-any.whl",
+    "sha256": "08ecf7548fb48205e7f213d70c71e67b8271b7242093dc3f1da578b42c734a2c",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "httpcore",
+    "version": "1.0.9",
+    "source": "https://pypi.org/project/httpcore/1.0.9/",
+    "project_urls": {
+      "Documentation": "https://www.encode.io/httpcore",
+      "Homepage": "https://www.encode.io/httpcore/",
+      "Source": "https://github.com/encode/httpcore"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 78784,
+    "file": "httpcore-1.0.9-py3-none-any.whl",
+    "sha256": "2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "httpx",
+    "version": "0.28.1",
+    "source": "https://pypi.org/project/httpx/0.28.1/",
+    "project_urls": {
+      "Changelog": "https://github.com/encode/httpx/blob/master/CHANGELOG.md",
+      "Documentation": "https://www.python-httpx.org",
+      "Homepage": "https://github.com/encode/httpx",
+      "Source": "https://github.com/encode/httpx"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 73517,
+    "file": "httpx-0.28.1-py3-none-any.whl",
+    "sha256": "d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "httpx-sse",
+    "version": "0.4.3",
+    "source": "https://pypi.org/project/httpx-sse/0.4.3/",
+    "project_urls": {
+      "Homepage": "https://github.com/florimondmanca/httpx-sse"
+    },
+    "license": "MIT",
+    "download_bytes": 8960,
+    "file": "httpx_sse-0.4.3-py3-none-any.whl",
+    "sha256": "0ac1c9fe3c0afad2e0ebb25a934a59f4c7823b60792691f779fad2c5568830fc",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "idna",
+    "version": "3.20",
+    "source": "https://pypi.org/project/idna/3.20/",
+    "project_urls": {
+      "Changelog": "https://github.com/kjd/idna/blob/master/HISTORY.md",
+      "Issue tracker": "https://github.com/kjd/idna/issues",
+      "Source": "https://github.com/kjd/idna"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 69583,
+    "file": "idna-3.20-py3-none-any.whl",
+    "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "iniconfig",
+    "version": "2.3.0",
+    "source": "https://pypi.org/project/iniconfig/2.3.0/",
+    "project_urls": {
+      "Homepage": "https://github.com/pytest-dev/iniconfig"
+    },
+    "license": "MIT",
+    "download_bytes": 7484,
+    "file": "iniconfig-2.3.0-py3-none-any.whl",
+    "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "Jinja2",
+    "version": "3.1.6",
+    "source": "https://pypi.org/project/Jinja2/3.1.6/",
+    "project_urls": {
+      "Changes": "https://jinja.palletsprojects.com/changes/",
+      "Chat": "https://discord.gg/pallets",
+      "Documentation": "https://jinja.palletsprojects.com/",
+      "Donate": "https://palletsprojects.com/donate",
+      "Source": "https://github.com/pallets/jinja/"
+    },
+    "license": "See upstream metadata",
+    "download_bytes": 134899,
+    "file": "jinja2-3.1.6-py3-none-any.whl",
+    "sha256": "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "jsonschema",
+    "version": "4.26.0",
+    "source": "https://pypi.org/project/jsonschema/4.26.0/",
+    "project_urls": {
+      "Changelog": "https://github.com/python-jsonschema/jsonschema/blob/main/CHANGELOG.rst",
+      "Documentation": "https://python-jsonschema.readthedocs.io/",
+      "Funding": "https://github.com/sponsors/Julian",
+      "Homepage": "https://github.com/python-jsonschema/jsonschema",
+      "Issues": "https://github.com/python-jsonschema/jsonschema/issues/",
+      "Source": "https://github.com/python-jsonschema/jsonschema",
+      "Tidelift": "https://tidelift.com/subscription/pkg/pypi-jsonschema?utm_source=pypi-jsonschema&utm_medium=referral&utm_campaign=pypi-link"
+    },
+    "license": "MIT",
+    "download_bytes": 90630,
+    "file": "jsonschema-4.26.0-py3-none-any.whl",
+    "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "jsonschema-specifications",
+    "version": "2025.9.1",
+    "source": "https://pypi.org/project/jsonschema-specifications/2025.9.1/",
+    "project_urls": {
+      "Documentation": "https://jsonschema-specifications.readthedocs.io/",
+      "Funding": "https://github.com/sponsors/Julian",
+      "Homepage": "https://github.com/python-jsonschema/jsonschema-specifications",
+      "Issues": "https://github.com/python-jsonschema/jsonschema-specifications/issues/",
+      "Source": "https://github.com/python-jsonschema/jsonschema-specifications",
+      "Tidelift": "https://tidelift.com/subscription/pkg/pypi-jsonschema-specifications?utm_source=pypi-jsonschema-specifications&utm_medium=referral&utm_campaign=pypi-link"
+    },
+    "license": "MIT",
+    "download_bytes": 18437,
+    "file": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+    "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "MarkupSafe",
+    "version": "3.0.4",
+    "source": "https://pypi.org/project/MarkupSafe/3.0.4/",
+    "project_urls": {
+      "Changes": "https://markupsafe.palletsprojects.com/page/changes/",
+      "Chat": "https://discord.gg/pallets",
+      "Documentation": "https://markupsafe.palletsprojects.com/",
+      "Donate": "https://palletsprojects.com/donate",
+      "Source": "https://github.com/pallets/markupsafe/"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 14501,
+    "file": "markupsafe-3.0.4-cp314-cp314-win_amd64.whl",
+    "sha256": "c1bc67752d5f21013cfe430df4062441714eab79f65a6a05e01505957e9c35fe",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "mcp",
+    "version": "1.26.0",
+    "source": "https://pypi.org/project/mcp/1.26.0/",
+    "project_urls": {
+      "Homepage": "https://modelcontextprotocol.io",
+      "Issues": "https://github.com/modelcontextprotocol/python-sdk/issues",
+      "Repository": "https://github.com/modelcontextprotocol/python-sdk"
+    },
+    "license": "MIT",
+    "download_bytes": 233615,
+    "file": "mcp-1.26.0-py3-none-any.whl",
+    "sha256": "904a21c33c25aa98ddbeb47273033c435e595bbacfdb177f4bd87f6dceebe1ca",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "opentelemetry-api",
+    "version": "1.45.0",
+    "source": "https://pypi.org/project/opentelemetry-api/1.45.0/",
+    "project_urls": {
+      "Homepage": "https://github.com/open-telemetry/opentelemetry-python/tree/main/opentelemetry-api",
+      "Repository": "https://github.com/open-telemetry/opentelemetry-python"
+    },
+    "license": "Apache-2.0",
+    "download_bytes": 60020,
+    "file": "opentelemetry_api-1.45.0-py3-none-any.whl",
+    "sha256": "80e068aba7cd56c8b58512d6a36f8d25cb1dfaa0c0a4cc1c938ccf9f362d9cb3",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "packaging",
+    "version": "26.3",
+    "source": "https://pypi.org/project/packaging/26.3/",
+    "project_urls": {
+      "Documentation": "https://packaging.pypa.io/",
+      "Source": "https://github.com/pypa/packaging"
+    },
+    "license": "Apache-2.0 OR BSD-2-Clause",
+    "download_bytes": 129956,
+    "file": "packaging-26.3-py3-none-any.whl",
+    "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pathspec",
+    "version": "1.1.1",
+    "source": "https://pypi.org/project/pathspec/1.1.1/",
+    "project_urls": {
+      "Change Log": "https://python-path-specification.readthedocs.io/en/latest/changes.html",
+      "Documentation": "https://python-path-specification.readthedocs.io/en/latest/index.html",
+      "Issue Tracker": "https://github.com/cpburnz/python-pathspec/issues",
+      "Source Code": "https://github.com/cpburnz/python-pathspec"
+    },
+    "license": "See upstream metadata",
+    "download_bytes": 57328,
+    "file": "pathspec-1.1.1-py3-none-any.whl",
+    "sha256": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "playwright",
+    "version": "1.58.0",
+    "source": "https://pypi.org/project/playwright/1.58.0/",
+    "project_urls": {
+      "Release notes": "https://github.com/microsoft/playwright-python/releases",
+      "homepage": "https://github.com/Microsoft/playwright-python"
+    },
+    "license": "Apache-2.0",
+    "download_bytes": 36816005,
+    "file": "playwright-1.58.0-py3-none-win_amd64.whl",
+    "sha256": "a2bf639d0ce33b3ba38de777e08697b0d8f3dc07ab6802e4ac53fb65e3907af8",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pluggy",
+    "version": "1.6.0",
+    "source": "https://pypi.org/project/pluggy/1.6.0/",
+    "project_urls": null,
+    "license": "MIT",
+    "download_bytes": 20538,
+    "file": "pluggy-1.6.0-py3-none-any.whl",
+    "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pycparser",
+    "version": "3.0",
+    "source": "https://pypi.org/project/pycparser/3.0/",
+    "project_urls": {
+      "Homepage": "https://github.com/eliben/pycparser"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 48172,
+    "file": "pycparser-3.0-py3-none-any.whl",
+    "sha256": "b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pydantic",
+    "version": "2.13.5",
+    "source": "https://pypi.org/project/pydantic/2.13.5/",
+    "project_urls": {
+      "Changelog": "https://docs.pydantic.dev/latest/changelog/",
+      "Documentation": "https://docs.pydantic.dev",
+      "Funding": "https://github.com/sponsors/samuelcolvin",
+      "Homepage": "https://github.com/pydantic/pydantic",
+      "Source": "https://github.com/pydantic/pydantic"
+    },
+    "license": "MIT",
+    "download_bytes": 472589,
+    "file": "pydantic-2.13.5-py3-none-any.whl",
+    "sha256": "346a034f080da3755d8e9cb5e00e8b07de1d39e4f6e2c87d8ab7cafa0b269a73",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pydantic_core",
+    "version": "2.46.5",
+    "source": "https://pypi.org/project/pydantic_core/2.46.5/",
+    "project_urls": {
+      "Funding": "https://github.com/sponsors/samuelcolvin",
+      "Homepage": "https://github.com/pydantic",
+      "Source": "https://github.com/pydantic/pydantic/tree/main/pydantic-core"
+    },
+    "license": "MIT",
+    "download_bytes": 2042648,
+    "file": "pydantic_core-2.46.5-cp314-cp314-win_amd64.whl",
+    "sha256": "fa10ef4112775900e7a0661068635eb67b2ab824fbde764de6e0e21982a93db0",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pydantic-settings",
+    "version": "2.15.0",
+    "source": "https://pypi.org/project/pydantic-settings/2.15.0/",
+    "project_urls": {
+      "Changelog": "https://github.com/pydantic/pydantic-settings/releases",
+      "Documentation": "https://docs.pydantic.dev/dev-v2/concepts/pydantic_settings/",
+      "Funding": "https://github.com/sponsors/samuelcolvin",
+      "Homepage": "https://github.com/pydantic/pydantic-settings",
+      "Source": "https://github.com/pydantic/pydantic-settings"
+    },
+    "license": "MIT",
+    "download_bytes": 69413,
+    "file": "pydantic_settings-2.15.0-py3-none-any.whl",
+    "sha256": "0ba092c291c94baceb5eff768aa0d56400a457585bc0175925a5a5510303da42",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pyee",
+    "version": "13.0.1",
+    "source": "https://pypi.org/project/pyee/13.0.1/",
+    "project_urls": {
+      "Documentation": "https://pyee.readthedocs.io",
+      "Repository": "https://github.com/jfhbrook/pyee"
+    },
+    "license": "MIT",
+    "download_bytes": 15659,
+    "file": "pyee-13.0.1-py3-none-any.whl",
+    "sha256": "af2f8fede4171ef667dfded53f96e2ed0d6e6bd7ee3bb46437f77e3b57689228",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "Pygments",
+    "version": "2.21.0",
+    "source": "https://pypi.org/project/Pygments/2.21.0/",
+    "project_urls": {
+      "Bug Tracker": "https://github.com/pygments/pygments/issues",
+      "Changelog": "https://github.com/pygments/pygments/blob/master/CHANGES",
+      "Documentation": "https://pygments.org/docs",
+      "Homepage": "https://pygments.org",
+      "Source": "https://github.com/pygments/pygments"
+    },
+    "license": "BSD-2-Clause",
+    "download_bytes": 1250147,
+    "file": "pygments-2.21.0-py3-none-any.whl",
+    "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "PyJWT",
+    "version": "2.15.1",
+    "source": "https://pypi.org/project/PyJWT/2.15.1/",
+    "project_urls": {
+      "Homepage": "https://github.com/jpadilla/pyjwt"
+    },
+    "license": "MIT",
+    "download_bytes": 33860,
+    "file": "pyjwt-2.15.1-py3-none-any.whl",
+    "sha256": "42d59d631f7768a1028a64c7ff581a9bf7519804daf91fc5b6c56e30eec5e193",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pytest",
+    "version": "9.1.1",
+    "source": "https://pypi.org/project/pytest/9.1.1/",
+    "project_urls": {
+      "Changelog": "https://docs.pytest.org/en/stable/changelog.html",
+      "Contact": "https://docs.pytest.org/en/stable/contact.html",
+      "Funding": "https://docs.pytest.org/en/stable/sponsor.html",
+      "Homepage": "https://docs.pytest.org/en/latest/",
+      "Source": "https://github.com/pytest-dev/pytest",
+      "Tracker": "https://github.com/pytest-dev/pytest/issues"
+    },
+    "license": "MIT",
+    "download_bytes": 386536,
+    "file": "pytest-9.1.1-py3-none-any.whl",
+    "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "python-dotenv",
+    "version": "1.2.4",
+    "source": "https://pypi.org/project/python-dotenv/1.2.4/",
+    "project_urls": {
+      "Source": "https://github.com/theskumar/python-dotenv"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 23266,
+    "file": "python_dotenv-1.2.4-py3-none-any.whl",
+    "sha256": "42269a8a5b3fd54ffa6f3d84b18abed50064717576b4ecf03dc4a55d8aa04fdc",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "python-multipart",
+    "version": "0.0.32",
+    "source": "https://pypi.org/project/python-multipart/0.0.32/",
+    "project_urls": {
+      "Changelog": "https://github.com/Kludex/python-multipart/blob/master/CHANGELOG.md",
+      "Documentation": "https://kludex.github.io/python-multipart/",
+      "Homepage": "https://github.com/Kludex/python-multipart",
+      "Source": "https://github.com/Kludex/python-multipart"
+    },
+    "license": "Apache-2.0",
+    "download_bytes": 30042,
+    "file": "python_multipart-0.0.32-py3-none-any.whl",
+    "sha256": "ff6d3f776f16878c894e52e107296ffc890e913c611b1a4ec6c44e2821fe2e23",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "pywin32",
+    "version": "312",
+    "source": "https://pypi.org/project/pywin32/312/",
+    "project_urls": {
+      "Bugs": "https://github.com/mhammond/pywin32/issues",
+      "Changes": "https://github.com/mhammond/pywin32/blob/main/CHANGES.md",
+      "Docs": "https://mhammond.github.io/pywin32/",
+      "Homepage": "https://github.com/mhammond/pywin32",
+      "Mailing List": "https://mail.python.org/mailman/listinfo/python-win32",
+      "Support Requests": "https://github.com/mhammond/pywin32/discussions"
+    },
+    "license": "PSF",
+    "download_bytes": 7024157,
+    "file": "pywin32-312-cp314-cp314-win_amd64.whl",
+    "sha256": "a4dd3a848290ef724347b19f301045831d8e802fa4464f491b98b1e0a081432e",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "referencing",
+    "version": "0.37.0",
+    "source": "https://pypi.org/project/referencing/0.37.0/",
+    "project_urls": {
+      "Changelog": "https://referencing.readthedocs.io/en/stable/changes/",
+      "Documentation": "https://referencing.readthedocs.io/",
+      "Funding": "https://github.com/sponsors/Julian",
+      "Homepage": "https://github.com/python-jsonschema/referencing",
+      "Issues": "https://github.com/python-jsonschema/referencing/issues/",
+      "Source": "https://github.com/python-jsonschema/referencing",
+      "Tidelift": "https://tidelift.com/subscription/pkg/pypi-referencing?utm_source=pypi-referencing&utm_medium=referral&utm_campaign=pypi-link"
+    },
+    "license": "MIT",
+    "download_bytes": 26766,
+    "file": "referencing-0.37.0-py3-none-any.whl",
+    "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "rpds-py",
+    "version": "2026.9.1",
+    "source": "https://pypi.org/project/rpds-py/2026.9.1/",
+    "project_urls": {
+      "Documentation": "https://rpds.readthedocs.io/",
+      "Funding": "https://github.com/sponsors/Julian",
+      "Homepage": "https://github.com/crate-py/rpds",
+      "Issues": "https://github.com/crate-py/rpds/issues/",
+      "Source": "https://github.com/crate-py/rpds",
+      "Tidelift": "https://tidelift.com/subscription/pkg/pypi-rpds-py?utm_source=pypi-rpds-py&utm_medium=referral&utm_campaign=pypi-link",
+      "Upstream": "https://github.com/orium/rpds"
+    },
+    "license": "MIT",
+    "download_bytes": 222852,
+    "file": "rpds_py-2026.9.1-cp314-cp314-win_amd64.whl",
+    "sha256": "837c6b305e26fe0f75b15c92cf3b2ba29e0ae19dc40b1c557b026cb426347d0c",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "sse-starlette",
+    "version": "3.5.0",
+    "source": "https://pypi.org/project/sse-starlette/3.5.0/",
+    "project_urls": {
+      "Homepage": "https://github.com/sysid/sse-starlette",
+      "Issues": "https://github.com/sysid/sse-starlette/issues",
+      "Repository": "https://github.com/sysid/sse-starlette",
+      "Source": "https://github.com/sysid/sse-starlette"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 17407,
+    "file": "sse_starlette-3.5.0-py3-none-any.whl",
+    "sha256": "3e6e1070df3f0f5d9cea81496de92dbb72f6721871d99748ece67441dd8b7997",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "starlette",
+    "version": "1.7.0",
+    "source": "https://pypi.org/project/starlette/1.7.0/",
+    "project_urls": {
+      "Changelog": "https://starlette.dev/release-notes/",
+      "Documentation": "https://starlette.dev/",
+      "Funding": "https://github.com/sponsors/Kludex",
+      "Homepage": "https://github.com/Kludex/starlette",
+      "Source": "https://github.com/Kludex/starlette"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 78980,
+    "file": "starlette-1.7.0-py3-none-any.whl",
+    "sha256": "67f8e99895493dd2911a03f11314af6ceebeae4e704bb9f43dfc6a9db151c93e",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "tomlkit",
+    "version": "0.15.1",
+    "source": "https://pypi.org/project/tomlkit/0.15.1/",
+    "project_urls": {
+      "Homepage": "https://github.com/python-poetry/tomlkit",
+      "Repository": "https://github.com/python-poetry/tomlkit"
+    },
+    "license": "MIT",
+    "download_bytes": 49449,
+    "file": "tomlkit-0.15.1-py3-none-any.whl",
+    "sha256": "177a05aece5a8ca5266fd3c448abb47b8d352f09d477d3ca8332db4d89b24304",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "trove-classifiers",
+    "version": "2026.9.21.13",
+    "source": "https://pypi.org/project/trove-classifiers/2026.9.21.13/",
+    "project_urls": {
+      "Homepage": "https://github.com/pypa/trove-classifiers"
+    },
+    "license": "See upstream metadata",
+    "download_bytes": 14232,
+    "file": "trove_classifiers-2026.9.21.13-py3-none-any.whl",
+    "sha256": "8b1ff4f9c191b1040b71c37f1e445ab99732911e3cd91de52838453a854d7a17",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "source": "https://pypi.org/project/typing_extensions/4.16.0/",
+    "project_urls": {
+      "Bug Tracker": "https://github.com/python/typing_extensions/issues",
+      "Changes": "https://github.com/python/typing_extensions/blob/main/CHANGELOG.md",
+      "Documentation": "https://typing-extensions.readthedocs.io/",
+      "Home": "https://github.com/python/typing_extensions",
+      "Q & A": "https://github.com/python/typing/discussions",
+      "Repository": "https://github.com/python/typing_extensions"
+    },
+    "license": "PSF-2.0",
+    "download_bytes": 45571,
+    "file": "typing_extensions-4.16.0-py3-none-any.whl",
+    "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "typing-inspection",
+    "version": "0.4.4",
+    "source": "https://pypi.org/project/typing-inspection/0.4.4/",
+    "project_urls": {
+      "Changelog": "https://github.com/pydantic/typing-inspection/blob/main/HISTORY.md",
+      "Documentation": "https://pydantic.github.io/typing-inspection/dev/",
+      "Homepage": "https://github.com/pydantic/typing-inspection",
+      "Source": "https://github.com/pydantic/typing-inspection"
+    },
+    "license": "MIT",
+    "download_bytes": 14750,
+    "file": "typing_inspection-0.4.4-py3-none-any.whl",
+    "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  },
+  {
+    "name": "uvicorn",
+    "version": "0.54.0",
+    "source": "https://pypi.org/project/uvicorn/0.54.0/",
+    "project_urls": {
+      "Changelog": "https://uvicorn.dev/release-notes",
+      "Funding": "https://github.com/sponsors/Kludex",
+      "Homepage": "https://uvicorn.dev/",
+      "Source": "https://github.com/Kludex/uvicorn"
+    },
+    "license": "BSD-3-Clause",
+    "download_bytes": 87427,
+    "file": "uvicorn-0.54.0-py3-none-any.whl",
+    "sha256": "505bdb0f318731d45f1f712071fc781a8981f6847a31c902c9f5e652d4f67faf",
+    "verification": "Matches official PyPI release SHA-256; wheel-only download; no dependency setup scripts executed"
+  }
+]

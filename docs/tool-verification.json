@@ -1,0 +1,79 @@
+{
+  "verified_at": "2026-10-05T15:53:28.162978+00:00",
+  "input": "built-in synthetic files only",
+  "os_network_isolation_verified": false,
+  "results": [
+    {
+      "tool": "nuclei",
+      "scenario": "positive",
+      "status": "succeeded",
+      "progress": 100,
+      "log": "真实工具处理内置合成文件完成；结果仅为待验证线索；无主动目标请求",
+      "exit_code": 0,
+      "output_bytes": 10002,
+      "result": "{\"artifact_id\": \"art_3a3b6f1194424686\", \"status\": \"accepted\", \"accepted_entries\": 10, \"rejected_entries\": 0, \"created\": 1, \"finding_ids\": [\"find_0df2e4b9ab624d8d\"], \"raw_retained\": false, \"tool\": \"nuclei\", \"tool_version\": \"3.11.1\", \"execution_mode\": \"offline-synthetic\", \"tool_output_sha256\": \"f7b55b75f8de6a49e29af3e1a0a7476e0174157befac476e9a5ca34b044235f8\"}",
+      "created_at": "2026-10-05T15:53:24.575895+00:00",
+      "updated_at": "2026-10-05T15:53:26.067156+00:00"
+    },
+    {
+      "tool": "nuclei",
+      "scenario": "negative",
+      "status": "succeeded",
+      "progress": 100,
+      "log": "真实工具处理内置合成文件完成；结果仅为待验证线索；无主动目标请求",
+      "exit_code": 0,
+      "output_bytes": 0,
+      "result": "{\"accepted_entries\": 0, \"created\": 0, \"finding_ids\": [], \"artifact_id\": null, \"execution_mode\": \"offline-synthetic\", \"tool_output_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"}",
+      "created_at": "2026-10-05T15:53:26.100778+00:00",
+      "updated_at": "2026-10-05T15:53:26.394004+00:00"
+    },
+    {
+      "tool": "nuclei",
+      "scenario": "positive",
+      "status": "succeeded",
+      "progress": 100,
+      "log": "真实工具处理内置合成文件完成；结果仅为待验证线索；无主动目标请求",
+      "exit_code": 0,
+      "output_bytes": 10001,
+      "result": "{\"artifact_id\": \"art_3a3b6f1194424686\", \"status\": \"accepted\", \"accepted_entries\": 10, \"rejected_entries\": 0, \"created\": 0, \"finding_ids\": [\"find_0df2e4b9ab624d8d\"], \"raw_retained\": false, \"tool\": \"nuclei\", \"tool_version\": \"3.11.1\", \"reused\": true, \"execution_mode\": \"offline-synthetic\", \"tool_output_sha256\": \"8ea1e3eab71cabdd5d93b46676ede4fc5782b64fc30a832d1bc1af1db843796f\"}",
+      "created_at": "2026-10-05T15:53:26.410096+00:00",
+      "updated_at": "2026-10-05T15:53:26.721966+00:00"
+    },
+    {
+      "tool": "gitleaks",
+      "scenario": "positive",
+      "status": "succeeded",
+      "progress": 100,
+      "log": "真实工具处理内置合成文件完成；结果仅为待验证线索；无主动目标请求",
+      "exit_code": 0,
+      "output_bytes": 762,
+      "result": "{\"artifact_id\": \"art_99fb78172e3e4d9b\", \"status\": \"accepted\", \"accepted_entries\": 1, \"rejected_entries\": 0, \"created\": 1, \"finding_ids\": [\"find_6e059698453f4fb5\"], \"raw_retained\": false, \"tool\": \"gitleaks\", \"tool_version\": \"8.30.1\", \"execution_mode\": \"offline-synthetic\", \"tool_output_sha256\": \"5cf49d32221598b0cce0177714ea4c8625463df9fdeea69a04839c5ec753df2b\"}",
+      "created_at": "2026-10-05T15:53:26.726723+00:00",
+      "updated_at": "2026-10-05T15:53:27.263621+00:00"
+    },
+    {
+      "tool": "gitleaks",
+      "scenario": "negative",
+      "status": "succeeded",
+      "progress": 100,
+      "log": "真实工具处理内置合成文件完成；结果仅为待验证线索；无主动目标请求",
+      "exit_code": 0,
+      "output_bytes": 81,
+      "result": "{\"accepted_entries\": 0, \"created\": 0, \"finding_ids\": [], \"artifact_id\": null, \"execution_mode\": \"offline-synthetic\", \"tool_output_sha256\": \"37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570\"}",
+      "created_at": "2026-10-05T15:53:27.339577+00:00",
+      "updated_at": "2026-10-05T15:53:27.726045+00:00"
+    },
+    {
+      "tool": "gitleaks",
+      "scenario": "positive",
+      "status": "succeeded",
+      "progress": 100,
+      "log": "真实工具处理内置合成文件完成；结果仅为待验证线索；无主动目标请求",
+      "exit_code": 0,
+      "output_bytes": 762,
+      "result": "{\"artifact_id\": \"art_99fb78172e3e4d9b\", \"status\": \"accepted\", \"accepted_entries\": 1, \"rejected_entries\": 0, \"created\": 0, \"finding_ids\": [\"find_6e059698453f4fb5\"], \"raw_retained\": false, \"tool\": \"gitleaks\", \"tool_version\": \"8.30.1\", \"reused\": true, \"execution_mode\": \"offline-synthetic\", \"tool_output_sha256\": \"3209d8eafa9ff1698b1ed9b0aa144a58c434bc435a74b7788daba9d03ed8f62f\"}",
+      "created_at": "2026-10-05T15:53:27.751125+00:00",
+      "updated_at": "2026-10-05T15:53:28.114363+00:00"
+    }
+  ]
+}

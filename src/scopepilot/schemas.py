@@ -2,6 +2,7 @@ from datetime import datetime
 from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+from .url_paths import decoded_path, encoded_path
 
 
 class PolicyStatus(StrEnum):
@@ -16,6 +17,27 @@ class FindingStatus(StrEnum):
     CONFIRMED = "confirmed"
     REJECTED = "rejected"
     DUPLICATE = "duplicate"
+
+
+class Severity(StrEnum):
+    CRITICAL = "critical"
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
+    INFO = "info"
+    UNRATED = "unrated"
+
+
+class FindingCategory(StrEnum):
+    HARDENING = "hardening"
+    VULNERABILITY = "vulnerability"
+
+
+class SourceKind(StrEnum):
+    RULE = "rule"
+    TOOL = "tool"
+    MODEL = "model"
+    HUMAN = "human"
 
 
 class ScopeRule(BaseModel):
@@ -39,9 +61,9 @@ class ScopeRule(BaseModel):
     @field_validator("path_prefix")
     @classmethod
     def absolute_path(cls, value: str) -> str:
-        if not value.startswith("/"):
-            raise ValueError("path_prefix must start with /")
-        return value
+        if '?' in value or '#' in value:
+            raise ValueError('path_prefix must be a path without query or fragment')
+        return encoded_path(decoded_path(value))
 
 
 class PolicyCreate(BaseModel):
@@ -76,13 +98,21 @@ class ProjectCreate(BaseModel):
 
 
 class ReviewCreate(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
     status: FindingStatus
     reviewer: str = Field(min_length=1, max_length=120)
     actual_result: str = Field(min_length=3, max_length=4000)
     tested_identity: str = Field(min_length=1, max_length=120)
     tested_object: str = Field(min_length=1, max_length=120)
     stop_reason: str = Field(min_length=1, max_length=1000)
+    success_criteria: str = Field(default="", max_length=2000)
+    criteria_met: bool = False
+    evidence_refs: list[str] = Field(default_factory=list, max_length=100)
+    control_required: bool = False
+    control_result: str = Field(default="", max_length=4000)
+    control_passed: bool | None = None
+    severity: Severity | None = None
+    severity_reason: str = Field(default="", max_length=2000)
 
     @field_validator("status")
     @classmethod

@@ -1,46 +1,47 @@
-# Implementation status — v0.2
+# ScopePilot v1 实现状态
 
-Updated: 2026-10-05
+更新：2026-10-06。本文件描述当前代码能力，与项目规划和最终验收结论分开。
 
-This file distinguishes implemented behavior from the roadmap in `ScopePilot-项目规划.md`.
+## 已实现
 
-## Working vertical slice
+| 部分 | 当前行为 |
+|---|---|
+| 授权范围 | 版本化策略；精确 HTTP(S) 协议、主机、端口和路径；拒绝规则优先；未启用或过期策略拒绝处理；拒绝歧义 URL |
+| HAR 与数据最小化 | HTTP 默认 5 MiB 上传限制；2,000 条上限及 JSON 深度/结构限制；逐条范围检查；完整目标、响应头与 Cookie 属性；不保存上传原件或 Cookie 值 |
+| 被动规则 | 安全头、Cookie Secure/HttpOnly/SameSite、CORS、调试错误、疑似敏感内容、对象授权线索；目录索引、Git/环境配置暴露的离线结构检查；只提出候选，不确认、不生成 CVSS |
+| 工具结果导入 | Nuclei JSON/JSONL 与 Gitleaks JSON；严格结构与来源定位；HTTP 目标范围检查；相对源码路径限制；无效记录整批拒绝 |
+| 发现与评级 | 按项目、完整目标、方法、类型去重，源码包含定位；合并证据与来源；保留工具原始评级和人工评级；配置加固与漏洞线索分开 |
+| 人工复核 | 记录身份、对象、成功判据、实际结果、证据、必要对照、停止原因及策略版本；确认和报告都重新校验证据条件 |
+| 数据与审计 | 项目、身份、材料和证据管理；删除材料时处理派生依赖并降级失效确认；审计记录；仅符合条件的确认发现可导出 Markdown |
+| 中文网页 | 真实计数、四项筛选、独立详情、脱敏证据与来源、复核历史、导入、任务状态/取消、报告预览与下载；响应式布局 |
+| 任务生命周期 | 排队/运行/完成/失败/取消/超时/输出超限/中断状态；退出码、受限日志、进度；重启将遗留运行任务标为中断，不自动恢复执行 |
+| 内置真实工具 | 固定 Nuclei 3.11.1 与 Gitleaks 8.30.1，检查二进制和模板哈希；仅处理临时内置合成文件，默认关闭 |
+| Codex MCP | 官方 Python SDK 的 stdio 服务；与网页共用业务服务；支持查询、文本导入、离线分析和符合条件的报告导出，不提供任意命令、任务启动/取消或人工确认 |
+| 可选本地模型 | 默认关闭；显式启用后仅连接数值回环 HTTP 兼容服务；禁用代理与重定向；发送结构摘要并校验证据引用 |
+| 安装 | Python 3.11+、含哈希的 requirements.lock、Windows PowerShell 启动路径；服务仅绑定回环地址并检查 Host/跨源写操作 |
 
-- Project creation with a versioned authorization policy.
-- Exact HTTP(S) host, port and path-scope decisions; deny rules win; inactive and expired policies fail closed.
-- HAR import with a 5 MiB HTTP upload limit and 2,000-entry parser limit.
-- Per-entry rejection while retaining only accepted, sanitized evidence.
-- Credential removal, email removal and project-scoped stable pseudonyms for object identifiers.
-- Endpoint catalog for accepted evidence.
-- Deterministic, evidence-backed object-authorization review hypotheses.
-- Idempotent analysis runs for the same evidence and rule type.
-- Human review records tied to project, policy version, identity, object and stop reason.
-- Markdown report export only for human-confirmed findings.
-- Audit events for project, policy, import, analysis, review and report actions.
-- Loopback-only CLI binding, trusted Host filtering and cross-origin mutation rejection.
-- Browser workbench for project creation, HAR upload, identities, analysis, review, deletion and report generation.
-- Editable identity-context records containing aliases, roles and ownership notes, with credential-like input rejected.
-- Manual artifact deletion cascades through derived endpoints, evidence, findings and reviews while retaining a minimal audit event.
-- Optional OpenAI-compatible local LLM gateway restricted to numeric loopback addresses, with redirects and environment proxies disabled.
-- Local-model inputs contain structural metadata rather than request or response values; model evidence references are verified before storage.
+## 明确边界与未完成项
 
-## Partially implemented
+- **系统级禁止外联隔离未完成验收。** 应用层参数限制、临时环境和拒绝代理不等于操作系统网络沙盒。
+- 主动目标请求关闭。真实工具任务只处理程序内置的合成离线文件，不运行用户目标、任意脚本、任意命令或上传模板。
+- 模拟生命周期不调用扫描器、不创建发现，不能作为检测能力验证结果。
+- 未提供经过验证的 Juice Shop、DVWA、WebGoat 部署或主动扫描；也没有真实 SRC 接入与自动提交。
+- 未实现 Burp XML、OpenAPI、JS AST 导入、自动账号角色对照、项目整体删除、定时清理、外部模型权限/费用管理或模型质量评估体系。
+- 脱敏不保证识别所有秘密。MCP 文本在本地服务脱敏前已进入 Codex 上下文，输入应为合成或预先脱敏的材料。
+- 新增配置暴露检查仅适用已有 GET/200 响应的有限结构；匹配配置路径的响应正文整体省略，目录结构命中时也省略正文。正常页与误报边界见 [COMMON_CHECKS.md](docs/COMMON_CHECKS.md)。
+- 没有足够证据的旧确认会退回待补证据。直接设置 confirmed、模板评级高或模型置信度高都不足以导出确认报告。
 
-- SP-03: Scope decisions and audit exist; the verified container network-isolation profile is pending.
-- SP-04: HAR import is synchronous; persistent job cancellation and restart recovery are pending.
-- SP-05: API uploads are closed, raw content is not persisted, and materials can be deleted with their derivatives; project-wide deletion and timed cleanup are pending.
-- SP-06: Endpoint catalog and editable identity contexts exist; automated role comparison is pending.
-- SP-09: Evidence-backed finding queue and review UI exist; richer evidence inspection is pending.
-- SP-12: install, unit, workflow and API checks exist; clean-container and prohibited-egress checks are pending.
+## 验证记录与复验
 
-## Not implemented yet
+- 测试覆盖范围、脱敏、解析边界、多目标去重、多来源、跨项目拒绝、复核/报告门槛、删除依赖、HTTP、MCP 与任务生命周期。最新测试结果以实际运行或 CI 为准，不在此固定测试数量。
+- [工具安装记录](docs/tool-installation.json) 与 [内置合成工具运行记录](docs/tool-verification.json) 保存官方来源、哈希和阳性/阴性处理结果；后者明确标记 os_network_isolation_verified 为 false。
+- [Codex MCP 说明](docs/CODEX.md) 和 [客户端验证记录](docs/codex-verification.json) 描述当前 Codex 客户端的独立连接验证及其限制，不能据此声称任意现有聊天已热加载工具。
+- 网页全流程、干净安装、完整变更审查和最终验收结论应分别记录；本文件不声明整体验收通过或已合并。
 
-- JavaScript, Burp XML and OpenAPI importers.
-- External provider permissions and cost budgets; only a loopback local-model gateway is available.
-- Evaluation datasets and dashboards.
-- Validated Juice Shop, DVWA and WebGoat deployments.
-- Real SRC onboarding or any target-side execution.
+在仓库根目录运行：
 
-## Verification evidence
+~~~powershell
+.\.venv\Scripts\python.exe -m pytest -q --basetemp .cache\pytest
+~~~
 
-The current suite has 17 passing tests covering scope boundaries, secret minimization, stable pseudonyms, end-to-end workflow, report gating, latest-review selection, analysis idempotency, identity and material deletion, local-model restrictions, evidence-reference validation and HTTP origin checks.
+已安装固定工具、且明确要复验内置合成场景时，可执行 scripts/verify_local_tools.py；该脚本会显式启用真实二进制进行合成验证，不证明系统隔离。MCP 的无模型复验见 [docs/CODEX.md](docs/CODEX.md)。

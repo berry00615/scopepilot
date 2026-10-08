@@ -1,0 +1,57 @@
+{
+  "measured_at": "2026-10-05T16:21:58.468540+00:00",
+  "directory_bytes": {
+    ".env.example": 172,
+    ".gitignore": 200,
+    "CHANGELOG.md": 879,
+    "CONTRIBUTING.md": 1097,
+    "IMPLEMENTATION_STATUS.md": 5068,
+    "LICENSE": 1101,
+    "pyproject.toml": 698,
+    "README.md": 8761,
+    "requirements.lock": 61344,
+    "SECURITY.md": 860,
+    "start-workbench.cmd": 417,
+    "tool-lock.json": 1110,
+    ".codex": 337,
+    ".downloads": 109386340,
+    ".git": 529070,
+    ".github": 849,
+    ".pytest_cache": 26283,
+    ".venv": 197705734,
+    "dist": 80078,
+    "docs": 359549,
+    "examples": 1241,
+    "runtime": 20838085,
+    "scripts": 63783,
+    "tests": 483701,
+    "src": 527219,
+    ".tools": 441531705,
+    ".cache": 60048357
+  },
+  "project_logical_bytes": 831664038,
+  "system_drive_growth_allowance": 325345280,
+  "conservative_accounted_bytes": 1157009318,
+  "drives": {
+    "C": {
+      "baseline": {
+        "used": 164542271488,
+        "free": 51739443200
+      },
+      "current_used": 164867616768,
+      "current_free": 51414097920,
+      "used_change": 325345280
+    },
+    "D": {
+      "baseline": {
+        "used": 605576155136,
+        "free": 170369032192
+      },
+      "current_used": 606260822016,
+      "current_free": 169684365312,
+      "used_change": 684666880
+    }
+  },
+  "containers_or_vhds_created": false,
+  "note": "Logical bytes may differ from allocated/compressed disk bytes. No unrelated directories were scanned. C: concurrent growth is included conservatively, not attributed wholly to this task."
+}
